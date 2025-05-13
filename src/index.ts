@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/ping', async (_, res) => {
-  const result = await pool.query('SELECT NOW()');
+  const result = await pool.execute('SELECT NOW()');
   res.json({ time: result.rows[0].now });
 });
 
