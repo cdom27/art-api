@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } from '../config/env';
 
 const pool = new Pool({
@@ -11,4 +12,6 @@ const pool = new Pool({
 
 pool.on('connect', () => console.log('Database connection successful'));
 
-export default pool;
+const db = drizzle({ client: pool });
+
+export default db;
