@@ -1,10 +1,16 @@
 import { Request, Response } from 'express';
-import { getAllArtists, getArtistById, getRandomArtist } from './service';
+import { getArtistById, getFilteredArtists, getRandomArtist } from './service';
 import { getArtworksByArtistId } from '../artworks/service';
+import { parseQuery } from '../../utils/parseQuery';
+import { artistQuerySchema } from './querySchema';
 
 export const getArtistsHandler = async (req: Request, res: Response) => {
+  // parse query params
+  const q = parseQuery(artistQuerySchema, req, res);
+  if (!q) return;
+
   try {
-    const artists = await getAllArtists();
+    const artists = await getFilteredArtists(q);
 
     res.status(200).json({ data: artists });
   } catch (error) {

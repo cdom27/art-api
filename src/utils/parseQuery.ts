@@ -1,11 +1,11 @@
-import { ZodSchema } from 'zod';
+import { z, ZodTypeAny } from 'zod';
 import { Request, Response } from 'express';
 
-export const parseQuery = <T>(
-  schema: ZodSchema<T>,
+export const parseQuery = <T extends ZodTypeAny>(
+  schema: T,
   req: Request,
   res: Response
-): T | undefined => {
+): z.output<T> | undefined => {
   const result = schema.safeParse(req.query);
 
   if (!result.success) {
@@ -15,5 +15,5 @@ export const parseQuery = <T>(
     return;
   }
 
-  return result.data;
+  return schema.parse(req.query);
 };
