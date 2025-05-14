@@ -1,13 +1,42 @@
 import db from '../../db/client';
-import { asc, eq, sql } from 'drizzle-orm';
+import { asc, eq, sql, and } from 'drizzle-orm';
 import { artworks } from '../../db/schema';
 import { Artwork } from './types';
+import { ArtistQueryParams } from '../artists/querySchema';
+import { checkFilters } from './utils';
 
-export const getAllArtworks = async (): Promise<Artwork[]> => {
-  const result = await db.select().from(artworks).orderBy(asc(artworks.id));
+export const getFilteredArtworks = async (
+  filters: ArtistQueryParams
+): Promise<Artwork[]> => {
+  const conditions = checkFilters(filters);
+
+  const offset = (filters.page - 1) * filters.limit;
+
+  const result = await db
+    .select()
+    .from(artworks)
+    .where(conditions.length ? and(...conditions) : undefined)
+    .orderBy(asc(artworks.id))
+    .limit(filters.limit)
+    .offset(offset);
   console.log('Fetched artworks:', result);
 
   return result;
+};
+
+export const getRandomArtwork = async (
+  filters: ArtistQueryParams
+): Promise<Artwork> => {
+  const conditions = checkFilters(filters);
+
+  const result = await db
+    .select()
+    .from(artworks)
+    .orderBy(sql`RANDOM()`)
+    .limit(1);
+  console.log('Fetched random artwork:', result[0]);
+
+  return result[0];
 };
 
 export const getArtworkById = async (id: number): Promise<Artwork> => {
@@ -17,17 +46,6 @@ export const getArtworkById = async (id: number): Promise<Artwork> => {
     .where(eq(artworks.id, id))
     .limit(1);
   console.log('Fetched artwork:', result[0]);
-
-  return result[0];
-};
-
-export const getRandomArtwork = async (): Promise<Artwork> => {
-  const result = await db
-    .select()
-    .from(artworks)
-    .orderBy(sql`RANDOM()`)
-    .limit(1);
-  console.log('Fetched random artwork:', result[0]);
 
   return result[0];
 };
