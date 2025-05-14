@@ -37,17 +37,6 @@ export const getFilteredArtists = async (
   return result;
 };
 
-export const getArtistById = async (id: number): Promise<Artist> => {
-  const result = await db
-    .select()
-    .from(artists)
-    .where(eq(artists.id, id))
-    .limit(1);
-  console.log('Fetched artist:', result[0]);
-
-  return result[0];
-};
-
 export const getRandomArtist = async (): Promise<Artist> => {
   const result = await db
     .select()
@@ -59,4 +48,13 @@ export const getRandomArtist = async (): Promise<Artist> => {
   return result[0];
 };
 
-// TODO: getAllArtistArtwork, getArtistAndArtwork, searchArtist
+export const getArtistById = async (id: number): Promise<Artist> => {
+  const result = await db
+    .select()
+    .from(artists)
+    .where(eq(artists.id, id))
+    .limit(1);
+  console.log('Fetched artist:', result[0]);
+
+  return result[0];
+};
