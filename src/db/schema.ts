@@ -7,7 +7,6 @@ export const artists = pgTable('artists', {
   nationality: text('nationality').notNull(),
   bio: text('bio').notNull(),
   wikipedia: text('wikipedia').notNull(),
-  paintingCount: integer('painting_count').notNull(),
   birthYear: integer('birth_year').notNull(),
   deathYear: integer('death_year').notNull(),
 });

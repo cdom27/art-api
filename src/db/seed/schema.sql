@@ -5,7 +5,6 @@ CREATE TABLE artists (
     nationality TEXT NOT NULL,
     bio TEXT NOT NULL,
     wikipedia TEXT NOT NULL,
-    painting_count INT NOT NULL,
     birth_year INT NOT NULL,
     death_year INT NOT NULL
 );
