@@ -32,4 +32,16 @@ export const getRandomArtwork = async (): Promise<Artwork> => {
   return result[0];
 };
 
+export const getArtworksByArtistId = async (
+  artistId: number
+): Promise<Artwork[]> => {
+  const result = await db
+    .select()
+    .from(artworks)
+    .where(eq(artworks.artistId, artistId));
+  console.log('Fetched artworks:', result);
+
+  return result;
+};
+
 //TODO: searchArtwork
