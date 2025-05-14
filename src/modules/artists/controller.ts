@@ -21,8 +21,12 @@ export const getArtistsHandler = async (req: Request, res: Response) => {
 };
 
 export const getRandomArtistHandler = async (req: Request, res: Response) => {
+  // parse query params
+  const q = parseQuery(artistQuerySchema, req, res);
+  if (!q) return;
+
   try {
-    const artist = await getRandomArtist();
+    const artist = await getRandomArtist(q);
 
     res.status(200).json({ data: artist });
   } catch (error) {

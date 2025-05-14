@@ -1,27 +1,14 @@
 import db from '../../db/client';
-import { asc, eq, sql, and, ilike, gte, lte } from 'drizzle-orm';
+import { asc, eq, sql, and } from 'drizzle-orm';
 import { artists } from '../../db/schema';
 import { Artist } from './types';
 import { ArtistQueryParams } from './querySchema';
+import { checkFilters } from './utils';
 
 export const getFilteredArtists = async (
   filters: ArtistQueryParams
 ): Promise<Artist[]> => {
-  const conditions = [];
-
-  // check filters
-  if (filters.name) conditions.push(ilike(artists.name, `%${filters.name}%`));
-  if (filters.genre) conditions.push(eq(artists.genre, filters.genre));
-  if (filters.nationality)
-    conditions.push(eq(artists.nationality, filters.nationality));
-  if (filters.birthYearMin)
-    conditions.push(gte(artists.birthYear, filters.birthYearMin));
-  if (filters.birthYearMax)
-    conditions.push(lte(artists.birthYear, filters.birthYearMax));
-  if (filters.deathYearMin)
-    conditions.push(gte(artists.deathYear, filters.deathYearMin));
-  if (filters.deathYearMax)
-    conditions.push(lte(artists.deathYear, filters.deathYearMax));
+  const conditions = checkFilters(filters);
 
   const offset = (filters.page - 1) * filters.limit;
 
@@ -37,14 +24,19 @@ export const getFilteredArtists = async (
   return result;
 };
 
-export const getRandomArtist = async (): Promise<Artist> => {
+export const getRandomArtist = async (
+  filters: ArtistQueryParams
+): Promise<Artist> => {
+  const conditions = checkFilters(filters);
+
   const result = await db
     .select()
     .from(artists)
+    .where(conditions.length ? and(...conditions) : undefined)
     .orderBy(sql`RANDOM()`)
     .limit(1);
-  console.log('Fetched random artist:', result[0]);
 
+  console.log('Fetched random artist:', result[0]);
   return result[0];
 };
 
