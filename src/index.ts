@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { PORT } from './config/env';
 import { rateLimiter } from './middlewares/rateLimiter';
 import { speedLimiter } from './middlewares/slowDown';
@@ -11,6 +12,13 @@ const app = express();
 app.use(express.json());
 app.use(rateLimiter);
 app.use(speedLimiter);
+
+// serve static frontend
+app.use(
+  express.static(path.resolve(__dirname, './client'), {
+    extensions: ['html'],
+  })
+);
 
 app.use('/api/artists', artistRoutes);
 app.use('/api/artworks', artworkRoutes);
