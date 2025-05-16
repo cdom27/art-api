@@ -1,4 +1,11 @@
-import { pgTable, serial, text, integer } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  serial,
+  text,
+  integer,
+  uuid,
+  timestamp,
+} from 'drizzle-orm/pg-core';
 
 export const artists = pgTable('artists', {
   id: serial('id').primaryKey(),
@@ -19,4 +26,13 @@ export const artworks = pgTable('artworks', {
   imageUrl: text('image_url'),
   thumbnailUrl: text('thumbnail_url'),
   artistId: integer('artist_id').references(() => artists.id),
+});
+
+export const apiKeys = pgTable('api_keys', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  domain: text('domain').notNull(),
+  secret: text('secret').notNull(),
+  requestCount: integer('request_count').notNull().default(0),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
