@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Influential Artist API</title>
+    <link rel="icon" type="image/ico" href="./assets/favicon.ico" />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a class="logo-type" href="/">
+          <img
+            id="logo"
+            src="./assets/logo.webp"
+            alt="Blue and orange gradient"
+          />
+          <span>IAA</span>
+        </a>
+
+        <div>
+          <a href="/explore">Explore</a>
+
+          <a href="/docs">Developers</a>
+
+          <a href="/about">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- introduction section -->
+      <section>
+        <h1>Introduction</h1>
+
+        <p>
+          The Influential Artist API provide data for the 50 most inlfuential
+          artists of all time. As well as images and data of their artwork's
+          within public domain.
+        </p>
+      </section>
+
+      <!-- get started section -->
+      <section>
+        <h2>Getting Started</h2>
+
+        <!-- generate key -->
+        <section>
+          <h3>Generate a key</h3>
+
+          <p>Register your domain to generate a Public API Key</p>
+
+          <form id="register-form">
+            <label for="domain">Domain</label>
+
+            <input
+              type="url"
+              id="domain"
+              name="domain"
+              placeholder="https://example.com"
+            />
+
+            <button type="submit">Generate Key</button>
+          </form>
+
+          <pre class="output"></pre>
+        </section>
+
+        <!-- set variables -->
+        <section>
+          <h3>Set Environment Variables</h3>
+
+          <p>
+            Create a `.env` file in the root of your project and add the
+            following environment variables:
+          </p>
+
+          <h4>Public Key</h4>
+
+          <p>Public key generated for your domain.</p>
+
+          <code> IAA_API_KEY=<span class="output"></span> </code>
+
+          <h4>Set Base URL</h4>
+
+          <code> IAA_BASE_URL=https://art.cidominguez.com/api/v1 </code>
+        </section>
+
+        <!-- conclude set up -->
+        <section>
+          <h3>🎉 That's it!</h3>
+
+          <p>That's it! You're now ready to use IIA in your application.</p>
+        </section>
+      </section>
+
+      <!-- TODO: Artist and Artwork endpoint Docss-->
+    </main>
+
+    <footer>
+      <span
+        >Made by
+        <a
+          href="https://www.cidominguez.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          >@cidominguez</a
+        ></span
+      >
+    </footer>
+
+    <script type="text/javascript" src="./assets/main.js"></script>
+  </body>
+</html>
