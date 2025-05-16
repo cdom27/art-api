@@ -5,6 +5,7 @@ import { rateLimiter } from './middlewares/rateLimiter';
 import { speedLimiter } from './middlewares/slowDown';
 import artistRoutes from './modules/artists/routes';
 import artworkRoutes from './modules/artworks/routes';
+import apiKeyRoutes from './modules/apiKeys/routes';
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.use(
 
 app.use('/api/v1/artists', artistRoutes);
 app.use('/api/v1/artworks', artworkRoutes);
+
+app.use('/api/internal', apiKeyRoutes);
 
 app.listen(PORT || 3000, () => {
   console.log(`Server running on port ${PORT || 3000}`);
