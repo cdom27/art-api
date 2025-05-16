@@ -20,8 +20,8 @@ app.use(
   })
 );
 
-app.use('/api/artists', artistRoutes);
-app.use('/api/artworks', artworkRoutes);
+app.use('/api/v1/artists', artistRoutes);
+app.use('/api/v1/artworks', artworkRoutes);
 
 app.listen(PORT || 3000, () => {
   console.log(`Server running on port ${PORT || 3000}`);
