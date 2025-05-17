@@ -1,9 +1,15 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import Home from './routes/Home';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <main>Something about artists</main>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>
 );
