@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
-// /api/artists
+// /api/v1/artists
 
 router.get('/', getArtistsHandler);
 router.get('/random', getRandomArtistHandler);
