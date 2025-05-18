@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { storeSecret } from './service';
 import { generateAndHashKey, normalizeDomain } from './utils';
+import { failure, success } from '../../utils/buildResponse';
 
 export const registerDomainHandler = async (
   req: Request<{}, {}, { domain: string }>,
@@ -14,17 +15,13 @@ export const registerDomainHandler = async (
   console.log('REQ BODY:', req.body);
 
   if (!domain) {
-    res
-      .status(400)
-      .json({ error: 'Domain to register is missing from request body' });
-    return;
+    return failure(res, 'Website missing from request body', 400);
   }
 
   const normalizedDomain = normalizeDomain(domain);
 
   if (!normalizedDomain) {
-    res.status(400).json({ error: 'Domain was not normalized.' });
-    return;
+    return failure(res, 'Domain was not normalize', 400);
   }
 
   // generate public key and secret hash
@@ -35,15 +32,14 @@ export const registerDomainHandler = async (
     const data = await storeSecret(normalizedDomain, keyPair.secret);
 
     if (!data) {
-      res.status(400).json({ error: 'Error while storing the secret.' });
-      return;
+      return failure(res, 'An error occured while storing secret.', 400);
     }
 
     // return public key
-    res.status(200).json({ pubKey: keyPair.pubKey });
+    // res.status(200).json({ pubKey: keyPair.pubKey });
+    return success(res, keyPair.pubKey, 'Successfully generated key pair.');
   } catch (error) {
     console.log('Error registering domain:', error);
-    res.status(500).json({ error: 'Internal error registering domain.' });
-    return;
+    return failure(res, 'Internal error while registering dev website.');
   }
 };

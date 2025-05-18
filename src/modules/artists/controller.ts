@@ -3,6 +3,7 @@ import { getArtistById, getFilteredArtists, getRandomArtist } from './service';
 import { getArtworksByArtistId } from '../artworks/service';
 import { parseQuery } from '../../utils/parseQuery';
 import { artistQuerySchema } from './querySchema';
+import { failure, success } from '../../utils/buildResponse';
 
 export const getArtistsHandler = async (req: Request, res: Response) => {
   // parse query params
@@ -12,11 +13,10 @@ export const getArtistsHandler = async (req: Request, res: Response) => {
   try {
     const artists = await getFilteredArtists(q);
 
-    res.status(200).json({ data: artists });
+    return success(res, artists, 'Successfully fetched artists.');
   } catch (error) {
-    console.log('Error getting artists:', error);
-    res.status(500).json({ error: 'Internal error getting artists.' });
-    return;
+    console.log('Error fetching artists:', error);
+    return failure(res, 'Internal error fetching artists.');
   }
 };
 
@@ -28,20 +28,19 @@ export const getRandomArtistHandler = async (req: Request, res: Response) => {
   try {
     const artist = await getRandomArtist(q);
 
-    res.status(200).json({ data: artist });
+    return success(res, artist, 'Successfully fetched random artist.');
   } catch (error) {
-    console.log('Error getting random artist:', error);
-    res.status(500).json({ error: 'Internal error getting random artist.' });
-    return;
+    console.log('Error fetching random artist:', error);
+    return failure(res, 'Internal error fetching random artist.');
   }
 };
 
 export const getFullArtistInfoHandler = async (req: Request, res: Response) => {
   // get id param and verify that it's a number
   const parsedId = Number(req.params.id);
+
   if (Number.isNaN(parsedId)) {
-    res.status(400).json({ error: 'Invalid artist ID.' });
-    return;
+    return failure(res, 'Invalid artist ID', 400);
   }
 
   try {
@@ -49,30 +48,26 @@ export const getFullArtistInfoHandler = async (req: Request, res: Response) => {
     const artist = await getArtistById(parsedId);
 
     if (!artist) {
-      res
-        .status(404)
-        .json({ error: `Artist with id ${parsedId} was not found.` });
-      return;
+      return failure(res, 'Artist not found.', 404);
     }
 
     const artworks = await getArtworksByArtistId(parsedId);
 
     if (!artworks) {
-      res
-        .status(404)
-        .json({ error: `Artwork for artist ${parsedId} was not found.` });
-      return;
+      return failure(res, 'Artworks for artist not found.', 404);
     }
 
     // compose full artist info object
     const fullArtistInfo = { ...artist, artworks };
 
-    res.status(200).json({ data: fullArtistInfo });
+    return success(
+      res,
+      fullArtistInfo,
+      'Successfully fetching full artist info'
+    );
   } catch (error) {
     console.log('Error getting full artist info:', error);
-    res.status(500).json({
-      error: `Internal error getting full info for artist with id ${parsedId}`,
-    });
+    return failure(res, 'Internal error fetching full artist info.');
   }
 };
 
@@ -83,26 +78,19 @@ export const getArtistByIdHandler = async (
   // get id param and verify that it's a number
   const parsedId = Number(req.params.id);
   if (Number.isNaN(parsedId)) {
-    res.status(400).json({ error: 'Invalid artist ID.' });
-    return;
+    return failure(res, 'Invalid artist ID.', 400);
   }
 
   try {
     const artist = await getArtistById(parsedId);
 
     if (!artist) {
-      res
-        .status(404)
-        .json({ error: `Artist with id ${parsedId} was not found.` });
-      return;
+      return failure(res, 'Artist not found.', 404);
     }
 
-    res.status(200).json({ data: artist });
+    return success(res, artist, 'Successfully fetched artist.');
   } catch (error) {
     console.log(`Error getting artist with id ${parsedId}:`, error);
-    res
-      .status(500)
-      .json({ error: `Internal error getting artist with id ${parsedId}.` });
-    return;
+    return failure(res, 'Error getting artist by id.');
   }
 };

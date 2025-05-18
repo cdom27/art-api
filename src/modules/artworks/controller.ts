@@ -6,6 +6,7 @@ import {
 } from './service';
 import { parseQuery } from '../../utils/parseQuery';
 import { artworkQuerySchema } from './querySchema';
+import { failure, success } from '../../utils/buildResponse';
 
 export const getArtworksHandler = async (req: Request, res: Response) => {
   // parse query params
@@ -15,11 +16,10 @@ export const getArtworksHandler = async (req: Request, res: Response) => {
   try {
     const artworks = await getFilteredArtworks(q);
 
-    res.status(200).json({ data: artworks });
+    return success(res, artworks, 'Successfully fetched artworks.');
   } catch (error) {
     console.log('Error getting artworks:', error);
-    res.status(500).json({ error: `Internal error getting artworks.` });
-    return;
+    return failure(res, 'Internal error fetching artworks.');
   }
 };
 
@@ -31,11 +31,10 @@ export const getRandomArtworkHandler = async (req: Request, res: Response) => {
   try {
     const artwork = await getRandomArtwork(q);
 
-    res.status(200).json({ data: artwork });
+    return success(res, artwork, 'Successfully fetched random artwork.');
   } catch (error) {
     console.log('Error getting random artwork:', error);
-    res.status(500).json({ error: `Internal error getting random artwork.` });
-    return;
+    return failure(res, 'Internal error fetching random artwork.');
   }
 };
 
@@ -46,26 +45,19 @@ export const getArtworkByIdHandler = async (
   // get id param and verify that it's a number
   const parsedId = Number(req.params.id);
   if (Number.isNaN(parsedId)) {
-    res.status(400).json({ error: 'Invalid artwork ID.' });
-    return;
+    return failure(res, 'Invalid artwork ID.', 400);
   }
 
   try {
     const artwork = await getArtworkById(parsedId);
 
     if (!artwork) {
-      res
-        .status(404)
-        .json({ error: `Artwork with id ${parsedId} was not found.` });
-      return;
+      return failure(res, 'Artwork not found.', 404);
     }
 
-    res.status(200).json({ data: artwork });
+    return success(res, artwork, 'Successfully fetched artwork.');
   } catch (error) {
     console.log(`Error getting artwork with id ${parsedId}:`, error);
-    res
-      .status(500)
-      .json({ error: `Internal error getting artwork with id ${parsedId}.` });
-    return;
+    return failure(res, 'Error getting artwork by id.');
   }
 };

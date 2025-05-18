@@ -1,5 +1,6 @@
 import { z, ZodTypeAny } from 'zod';
 import { Request, Response } from 'express';
+import { failure } from './buildResponse';
 
 export const parseQuery = <T extends ZodTypeAny>(
   schema: T,
@@ -9,10 +10,7 @@ export const parseQuery = <T extends ZodTypeAny>(
   const result = schema.safeParse(req.query);
 
   if (!result.success) {
-    res
-      .status(400)
-      .json({ error: 'Invalid query params', issues: result.error.format() });
-    return;
+    return failure(res, `invalid query params: ${result.error.format()}`, 400);
   }
 
   return schema.parse(req.query);
