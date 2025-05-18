@@ -10,15 +10,19 @@ export const getFilteredArtists = async (
 ): Promise<Artist[]> => {
   const conditions = checkFilters(filters);
 
-  const offset = (filters.page - 1) * filters.limit;
-
-  const result = await db
+  const q = db
     .select()
     .from(artists)
     .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(asc(artists.id))
-    .limit(filters.limit)
-    .offset(offset);
+    .orderBy(asc(artists.id));
+
+  // paginate query when specified
+  if (filters.page !== undefined && filters.limit !== undefined) {
+    const offset = (filters.page - 1) * filters.limit;
+    q.limit(filters.limit).offset(offset);
+  }
+
+  const result = await q;
 
   console.log('Filtered artists:', result);
   return result;

@@ -10,17 +10,21 @@ export const getFilteredArtworks = async (
 ): Promise<Artwork[]> => {
   const conditions = checkFilters(filters);
 
-  const offset = (filters.page - 1) * filters.limit;
-
-  const result = await db
+  const q = db
     .select()
     .from(artworks)
     .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(asc(artworks.id))
-    .limit(filters.limit)
-    .offset(offset);
-  console.log('Fetched artworks:', result);
+    .orderBy(asc(artworks.id));
 
+  // paginate query when specified
+  if (filters.page !== undefined && filters.limit !== undefined) {
+    const offset = (filters.page - 1) * filters.limit;
+    q.limit(filters.limit).offset(offset);
+  }
+
+  const result = await q;
+
+  console.log('Fetched artworks:', result);
   return result;
 };
 
@@ -61,5 +65,3 @@ export const getArtworksByArtistId = async (
 
   return result;
 };
-
-//TODO: searchArtwork
