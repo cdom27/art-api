@@ -8,7 +8,7 @@ This repository manages the source code and public domain content including phot
 
 ## Table of Contents
 
-- [Tech Stack](#tech-stack)
+- [Tech Stack](#tech)
 
 ## Tech
 
