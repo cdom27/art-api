@@ -6,6 +6,10 @@ You can try it out by [generating a public api key](https://art.cidominguez.com/
 
 This repository manages the source code and public domain content including photos of artworks provided in v1 of this api.
 
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+
 ## Tech
 
 v1 is deployed on **Google Cloud Platform**.
