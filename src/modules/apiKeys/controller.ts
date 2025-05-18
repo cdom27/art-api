@@ -15,7 +15,7 @@ export const registerDomainHandler = async (
   console.log('REQ BODY:', req.body);
 
   if (!domain) {
-    return failure(res, 'Website missing from request body', 400);
+    return failure(res, 'Domain missing from request body', 400);
   }
 
   const normalizedDomain = normalizeDomain(domain);
@@ -40,6 +40,6 @@ export const registerDomainHandler = async (
     return success(res, keyPair.pubKey, 'Successfully generated key pair.');
   } catch (error) {
     console.log('Error registering domain:', error);
-    return failure(res, 'Internal error while registering dev website.');
+    return failure(res, 'Internal error while registering domain.');
   }
 };
