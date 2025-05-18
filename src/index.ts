@@ -14,12 +14,12 @@ app.use(express.json());
 app.use(rateLimiter);
 app.use(speedLimiter);
 
-// serve static frontend
-app.use(
-  express.static(path.resolve(__dirname, './client'), {
-    extensions: ['html'],
-  })
-);
+// // serve static frontend
+// app.use(
+//   express.static(path.resolve(__dirname, './client'), {
+//     extensions: ['html'],
+//   })
+// );
 
 app.use('/api/v1/artists', artistRoutes);
 app.use('/api/v1/artworks', artworkRoutes);
