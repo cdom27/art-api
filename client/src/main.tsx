@@ -5,6 +5,7 @@ import Home from './routes/Home';
 import Docs from './routes/Docs';
 import NotFound from './routes/NotFound';
 import './index.css';
+import Explore from './routes/Explore';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -12,6 +13,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/docs' element={<Docs />} />
+        <Route path='/explore' element={<Explore />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
