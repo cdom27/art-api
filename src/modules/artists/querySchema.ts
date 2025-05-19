@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { paginationSchema } from '../shared/querySchema';
 
-export const artistQuerySchema = paginationSchema.extend({
+export const artistFilterSchema = z.object({
   name: z.string().optional(),
   genre: z.string().optional(),
   nationality: z.string().optional(),
@@ -10,5 +10,7 @@ export const artistQuerySchema = paginationSchema.extend({
   deathYearMin: z.coerce.number().optional(),
   deathYearMax: z.coerce.number().optional(),
 });
+
+export const artistQuerySchema = paginationSchema.merge(artistFilterSchema);
 
 export type ArtistQueryParams = z.output<typeof artistQuerySchema>;
