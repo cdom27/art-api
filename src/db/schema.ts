@@ -36,3 +36,9 @@ export const apiKeys = pgTable('api_keys', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
+
+export const schema = {
+  artists,
+  artworks,
+  apiKeys,
+};
