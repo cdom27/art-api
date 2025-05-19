@@ -3,12 +3,12 @@ import { asc, eq, sql, and } from 'drizzle-orm';
 import { artworks } from '../../db/schema';
 import { Artwork } from './types';
 import { ArtistQueryParams } from '../artists/querySchema';
-import { checkFilters } from './utils';
+import { getArtworkConditions } from '../shared/utils/checkFilters';
 
 export const getFilteredArtworks = async (
   filters: ArtistQueryParams
 ): Promise<Artwork[]> => {
-  const conditions = checkFilters(filters);
+  const conditions = getArtworkConditions(filters);
 
   const q = db
     .select()
@@ -31,7 +31,7 @@ export const getFilteredArtworks = async (
 export const getRandomArtwork = async (
   filters: ArtistQueryParams
 ): Promise<Artwork> => {
-  const conditions = checkFilters(filters);
+  const conditions = getArtworkConditions(filters);
 
   const result = await db
     .select()

@@ -1,8 +1,9 @@
 import { ilike, eq, gte, lte } from 'drizzle-orm';
-import { artists } from '../../db/schema';
-import { ArtistQueryParams } from './querySchema';
+import { artists, artworks } from '../../../db/schema';
+import { ArtistQueryParams } from '../../artists/querySchema';
+import { ArtworkQueryParams } from '../../artworks/querySchema';
 
-export const checkFilters = (filters: ArtistQueryParams) => {
+export const getArtistConditions = (filters: ArtistQueryParams) => {
   const conditions = [];
 
   if (filters.name) conditions.push(ilike(artists.name, `%${filters.name}%`));
@@ -17,6 +18,18 @@ export const checkFilters = (filters: ArtistQueryParams) => {
     conditions.push(gte(artists.deathYear, filters.deathYearMin));
   if (filters.deathYearMax)
     conditions.push(lte(artists.deathYear, filters.deathYearMax));
+
+  return conditions;
+};
+
+export const getArtworkConditions = (filters: ArtworkQueryParams) => {
+  const conditions = [];
+
+  if (filters.title)
+    conditions.push(ilike(artworks.title, `%${filters.title}%`));
+  if (filters.medium) conditions.push(eq(artworks.medium, filters.medium));
+  if (filters.artistId)
+    conditions.push(eq(artworks.artistId, filters.artistId));
 
   return conditions;
 };
