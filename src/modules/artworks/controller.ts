@@ -4,9 +4,9 @@ import {
   getFilteredArtworks,
   getRandomArtwork,
 } from './service';
-import { parseQuery } from '../../utils/parseQuery';
+import { parseQuery } from '../shared/utils/parseQuery';
 import { artworkQuerySchema } from './querySchema';
-import { failure, success } from '../../utils/buildResponse';
+import { failure, success } from '../shared/utils/buildResponse';
 
 export const getArtworksHandler = async (req: Request, res: Response) => {
   // parse query params

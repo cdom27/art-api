@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { getArtistById, getFilteredArtists, getRandomArtist } from './service';
 import { getArtworksByArtistId } from '../artworks/service';
-import { parseQuery } from '../../utils/parseQuery';
+import { parseQuery } from '../shared/utils/parseQuery';
 import { artistQuerySchema } from './querySchema';
-import { failure, success } from '../../utils/buildResponse';
+import { failure, success } from '../shared/utils/buildResponse';
 
 export const getArtistsHandler = async (req: Request, res: Response) => {
   // parse query params

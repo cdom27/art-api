@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { storeSecret } from './service';
 import { generateAndHashKey, normalizeDomain } from './utils';
-import { failure, success } from '../../utils/buildResponse';
+import { failure, success } from '../shared/utils/buildResponse';
 
 export const registerDomainHandler = async (
   req: Request<{}, {}, { domain: string }>,
