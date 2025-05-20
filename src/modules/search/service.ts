@@ -1,5 +1,5 @@
 import db from '../../db/client';
-import { and, asc, ilike, eq, or } from 'drizzle-orm';
+import { and, asc, eq } from 'drizzle-orm';
 import { artists, artworks } from '../../db/schema';
 import {
   getArtistConditions,
