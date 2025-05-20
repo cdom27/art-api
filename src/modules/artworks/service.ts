@@ -2,19 +2,19 @@ import db from '../../db/client';
 import { asc, eq, sql, and } from 'drizzle-orm';
 import { artworks } from '../../db/schema';
 import { Artwork } from './types';
-import { ArtistQueryParams } from '../artists/querySchema';
+import { ArtworkQueryParams } from './querySchema';
 import { getArtworkConditions } from '../shared/utils/checkFilters';
 
 export const getFilteredArtworks = async (
-  filters: ArtistQueryParams
+  filters: ArtworkQueryParams
 ): Promise<Artwork[]> => {
   const conditions = getArtworkConditions(filters);
 
-  const q = db
-    .select()
-    .from(artworks)
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(asc(artworks.id));
+  const q = db.select().from(artworks);
+
+  if (conditions.length) {
+    q.where(and(...conditions));
+  }
 
   // paginate query when specified
   if (filters.page !== undefined && filters.limit !== undefined) {
@@ -22,24 +22,26 @@ export const getFilteredArtworks = async (
     q.limit(filters.limit).offset(offset);
   }
 
-  const result = await q;
+  const result = await q.orderBy(asc(artworks.title));
 
   console.log('Fetched artworks:', result);
   return result;
 };
 
 export const getRandomArtwork = async (
-  filters: ArtistQueryParams
+  filters: ArtworkQueryParams
 ): Promise<Artwork> => {
   const conditions = getArtworkConditions(filters);
 
-  const result = await db
-    .select()
-    .from(artworks)
-    .orderBy(sql`RANDOM()`)
-    .limit(1);
-  console.log('Fetched random artwork:', result[0]);
+  const q = db.select().from(artworks);
 
+  if (conditions.length) {
+    q.where(and(...conditions));
+  }
+
+  const result = await q.orderBy(sql`RANDOM()`).limit(1);
+
+  console.log('Fetched random artwork:', result[0]);
   return result[0];
 };
 

@@ -10,11 +10,11 @@ export const getFilteredArtists = async (
 ): Promise<Artist[]> => {
   const conditions = getArtistConditions(filters);
 
-  const q = db
-    .select()
-    .from(artists)
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(asc(artists.id));
+  const q = db.select().from(artists);
+
+  if (conditions.length) {
+    q.where(and(...conditions));
+  }
 
   // paginate query when specified
   if (filters.page !== undefined && filters.limit !== undefined) {
@@ -22,7 +22,7 @@ export const getFilteredArtists = async (
     q.limit(filters.limit).offset(offset);
   }
 
-  const result = await q;
+  const result = await q.orderBy(asc(artists.name));
 
   console.log('Filtered artists:', result);
   return result;
@@ -33,12 +33,13 @@ export const getRandomArtist = async (
 ): Promise<Artist> => {
   const conditions = getArtistConditions(filters);
 
-  const result = await db
-    .select()
-    .from(artists)
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(sql`RANDOM()`)
-    .limit(1);
+  const q = db.select().from(artists);
+
+  if (conditions.length) {
+    q.where(and(...conditions));
+  }
+
+  const result = await q.orderBy(sql`RANDOM()`).limit(1);
 
   console.log('Fetched random artist:', result[0]);
   return result[0];
