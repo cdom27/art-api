@@ -255,7 +255,7 @@ The next release (v2) will prioritize developer experience, performance, and sup
 
 ## Author
 
-Maintained by [@cidominguez](https://github.com/cidominguez).
+Maintained by [@cdom27](https://github.com/cdom27).
 Feel free to open issues or suggest improvements.
 
 ---
