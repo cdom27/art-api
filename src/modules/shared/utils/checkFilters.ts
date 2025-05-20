@@ -1,4 +1,4 @@
-import { ilike, eq, gte, lte } from 'drizzle-orm';
+import { eq, gte, lte } from 'drizzle-orm';
 import { artists, artworks } from '../../../db/schema';
 import { ArtistQueryParams } from '../../artists/querySchema';
 import { ArtworkQueryParams } from '../../artworks/querySchema';
