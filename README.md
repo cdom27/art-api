@@ -44,7 +44,7 @@ The current API version (v1) is deployed on **Google Cloud Platform** and built 
 
 - **Version**: v1
 - **Base URL**: `https://art.cidominguez.com/api/v1/`
-- **Authentication**: Requires a [free API key](https://art.cidominguez.com/docs#register). Include it in the request body as `key`.
+- **Authentication**: Requires a [free API key](https://art.cidominguez.com/docs#register). Include it in the request header as 'x-api-key'.
 - **Rate Limiting**:
   - 200 requests per 15 minutes
   - After 75 requests, a delay of up to 3 seconds per request is applied
@@ -112,7 +112,7 @@ In your code, load these values via `import.meta.env` (in Vite), or however your
 
 ### Making Requests
 
-All requests must include your API key in the **body** of the request as a JSON object:
+All requests must include your API key in the **headers** of the request as 'x-api-key':
 
 #### Example: Get French artists
 
@@ -120,9 +120,11 @@ All requests must include your API key in the **body** of the request as a JSON 
 const response = await fetch(
   'https://art.cidominguez.com/api/v1/artists?nationality=French',
   {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ key: import.meta.env.VITE_IAA_PUBLIC_KEY }),
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': import.meta.env.VITE_IAA_PUBLIC_KEY,
+    },
   }
 );
 
@@ -136,9 +138,11 @@ console.log(result);
 const response = await fetch(
   'https://art.cidominguez.com/api/v1/artworks?title=lilies',
   {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ key: import.meta.env.VITE_IAA_PUBLIC_KEY }),
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': import.meta.env.VITE_IAA_PUBLIC_KEY,
+    },
   }
 );
 
@@ -212,9 +216,11 @@ Performs a global keyword-based search across both artists and artworks.
 const response = await fetch(
   'https://art.cidominguez.com/api/v1/search?q=monet&nationality=French',
   {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ key: import.meta.env.VITE_IAA_PUBLIC_KEY }),
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': import.meta.env.VITE_IAA_PUBLIC_KEY,
+    },
   }
 );
 
