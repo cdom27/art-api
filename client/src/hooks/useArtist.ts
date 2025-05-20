@@ -13,14 +13,14 @@ export default function useArtist() {
     setArtistsMessage(null);
 
     try {
-      const resp = await fetch(`/api/v1/artists`, {
+      const resp = await fetch(`http://localhost:3000/api/v1/artists`, {
         method: 'GET',
         headers: { 'Content-Type': 'applications/json' },
       });
 
       const result: ApiResponse<Artist[]> = await resp.json();
 
-      if (!resp.ok || !result.data) {
+      if (!resp.ok || !result.data || result.status !== 200) {
         throw new Error(
           `${result.status}: ${result.message}` || 'Failed to fetched artists.'
         );
