@@ -1,11 +1,11 @@
 import express from 'express';
-import path from 'path';
 import { PORT } from './config/env';
 import { rateLimiter } from './middlewares/rateLimiter';
 import { speedLimiter } from './middlewares/slowDown';
 import artistRoutes from './modules/artists/routes';
 import artworkRoutes from './modules/artworks/routes';
 import apiKeyRoutes from './modules/apiKeys/routes';
+import searchRoutes from './modules/search/routes';
 
 const app = express();
 
@@ -23,6 +23,7 @@ app.use(speedLimiter);
 
 app.use('/api/v1/artists', artistRoutes);
 app.use('/api/v1/artworks', artworkRoutes);
+app.use('/api/v1/search', searchRoutes);
 
 app.use('/api/internal', apiKeyRoutes);
 
