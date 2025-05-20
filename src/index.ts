@@ -1,7 +1,9 @@
 import express from 'express';
+import cors from 'cors';
 import { PORT } from './config/env';
 import { rateLimiter } from './middlewares/rateLimiter';
 import { speedLimiter } from './middlewares/slowDown';
+import { apiKeyAuth } from './middlewares/apiKeyAuth';
 import artistRoutes from './modules/artists/routes';
 import artworkRoutes from './modules/artworks/routes';
 import apiKeyRoutes from './modules/apiKeys/routes';
@@ -9,10 +11,14 @@ import searchRoutes from './modules/search/routes';
 
 const app = express();
 
+app.use(cors());
+
 // middlewares
 app.use(express.json());
 app.use(rateLimiter);
 app.use(speedLimiter);
+
+app.use('/api/v1', apiKeyAuth);
 
 // // serve static frontend
 // app.use(
