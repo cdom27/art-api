@@ -8,7 +8,9 @@ export default function SiteLayout({ children }: SiteLayoutProps) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className='font-medium px-3 pt-14 flex flex-col gap-14'>
+        {children}
+      </main>
     </>
   );
 }
