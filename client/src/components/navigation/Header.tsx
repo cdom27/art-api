@@ -1,24 +1,26 @@
 import { Link } from 'react-router';
 import Logo from '../../assets/logo.webp';
+import Gh from '../../assets/gh.svg';
 
 export default function Header() {
   return (
-    <header className='flex items-center px-3 py-6 justify-between'>
+    <header className='flex items-center px-3 py-6 justify-between font-medium'>
       <div className='flex items-center gap-2'>
         <img src={Logo} className='size-6 rounded-xs' />
-        <Link to='/'>IAA</Link>
+        <Link to='/' className='font-bold text-xl'>
+          IAA
+        </Link>
       </div>
 
       <nav className='flex items-center gap-4'>
         <Link
-          className='github-button'
           to='https://github.com/cdom27/influential-artists-api'
-          data-color-scheme='no-preference: dark; light: dark; dark: dark;'
-          data-icon='octicon-star'
-          data-size='large'
-          aria-label='Star cdom27/influential-artists-api on GitHub'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='bg-primary text-secondary flex items-center gap-2 text-sm py-2 px-4 rounded-sm'
         >
-          Star on GitHub
+          <img src={Gh} className='size-5' />
+          <span>View Code</span>
         </Link>
       </nav>
     </header>
