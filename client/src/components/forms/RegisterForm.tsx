@@ -26,7 +26,7 @@ export default function RegisterForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col gap-3 max-w-sm'
+      className='flex flex-col gap-4 max-w-sm'
     >
       <label htmlFor='domain' className='font-medium'>
         Your Domain
@@ -44,7 +44,7 @@ export default function RegisterForm() {
 
       <button
         type='submit'
-        className='bg-black text-white py-2 px-4 rounded disabled:opacity-50'
+        className='bg-black text-white py-2 px-4 rounded-sm disabled:opacity-50'
         disabled={isLoading}
       >
         {isLoading ? 'Generating Key...' : 'Generate Key'}
