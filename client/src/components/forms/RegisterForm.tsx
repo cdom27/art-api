@@ -26,7 +26,7 @@ export default function RegisterForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col gap-4 max-w-sm'
+      className='flex flex-col gap-4 w-full lg:w-1/2'
     >
       <label htmlFor='domain' className='font-medium'>
         Your Domain

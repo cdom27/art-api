@@ -4,7 +4,7 @@ import Gh from '../../assets/gh.svg';
 
 export default function Header() {
   return (
-    <header className='flex items-center px-3 py-6 justify-between font-medium'>
+    <header className='flex items-center px-3 py-6 justify-between font-medium sm:px-10'>
       <div className='flex items-center gap-2'>
         <img src={Logo} className='size-6 rounded-xs' />
         <Link to='/' className='font-bold text-xl'>
