@@ -2,18 +2,14 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import Home from './routes/Home';
-import Docs from './routes/Docs';
 import NotFound from './routes/NotFound';
 import './index.css';
-import Explore from './routes/Explore';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/docs' element={<Docs />} />
-        <Route path='/explore' element={<Explore />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
