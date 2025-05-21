@@ -3,6 +3,13 @@
 
 :root {
   font-family: 'Host Grotesk', sans-serif;
-  background: #f3f3f3;
+  background: #f4f4f4;
   color: #1d1c1c;
+}
+
+@theme {
+  --color-secondary: #f4f4f4;
+  --color-primary: #1d1c1c;
+  --color-accent-primary: #002bff;
+  --color-accent-secondary: #ff6a00;
 }
