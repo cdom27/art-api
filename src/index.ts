@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import { PORT } from './config/env';
 import { rateLimiter } from './middlewares/rateLimiter';
 import { speedLimiter } from './middlewares/slowDown';
@@ -20,12 +21,9 @@ app.use(speedLimiter);
 
 app.use('/api/v1', apiKeyAuth);
 
-// // serve static frontend
-// app.use(
-//   express.static(path.resolve(__dirname, './client'), {
-//     extensions: ['html'],
-//   })
-// );
+// serve client
+const clientBuildPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientBuildPath));
 
 app.use('/api/v1/artists', artistRoutes);
 app.use('/api/v1/artworks', artworkRoutes);
