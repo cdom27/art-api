@@ -41,8 +41,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build TypeScript
+      - name: Install React client dependencies
+        run: |
+          cd client
+          npm ci
+
+      - name: Build Express API
         run: npm run build
+
+      # React client build
+      - name: Build React client
+        run: |
+          cd client
+          npm run build
 
       - name: Seed test database
         run: npm run seed:test
