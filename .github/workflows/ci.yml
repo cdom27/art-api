@@ -47,7 +47,9 @@ jobs:
           npm ci
 
       - name: Build Express API
-        run: npm run build
+        run: |
+          # Only build the server-side code
+          npx tsc --project tsconfig.json
 
       # React client build
       - name: Build React client
