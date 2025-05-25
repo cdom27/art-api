@@ -51,11 +51,12 @@ jobs:
           # Only build the server-side code
           npx tsc --project tsconfig.json
 
-      # React client build
       - name: Build React client
         run: |
           cd client
           npm run build
+
+      # The database tables will be created by the seed script
 
       - name: Seed test database
         run: npm run test:seed
