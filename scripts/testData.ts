@@ -22,3 +22,4 @@ export const testArtworks = [
     artistId: 0,
   },
 ];
+// testing ci pipeline trigger
