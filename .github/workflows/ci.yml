@@ -47,9 +47,7 @@ jobs:
           npm ci
 
       - name: Build Express API
-        run: |
-          cd ..
-          npm run build
+        run: npm run build
 
       # React client build
       - name: Build React client
