@@ -14,7 +14,7 @@ export const testArtists = [
 export const testArtworks = [
   {
     id: 0,
-    title: 'Portrait of Jeanne',
+    title: 'Jeanne Hébuterne',
     medium: 'Oil on canvas',
     inferredYear: '1918',
     imageUrl: 'https://example.com/image.jpg',
