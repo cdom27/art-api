@@ -12,6 +12,9 @@ import searchRoutes from './modules/search/routes';
 
 const app = express();
 
+// trust cloud run reverse proxy
+app.set('trust proxy', 1);
+
 app.use(cors());
 
 // middlewares
