@@ -48,8 +48,6 @@ export const search = async (filters: SearchQueryParams) => {
         title: artworks.title,
         medium: artworks.medium,
         inferredYear: artworks.inferredYear,
-        imageUrl: artworks.imageUrl,
-        thumbnailUrl: artworks.thumbnailUrl,
         artistId: artworks.artistId,
         artistName: artists.name,
       })

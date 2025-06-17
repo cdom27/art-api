@@ -34,8 +34,6 @@ const seedTestDb = async () => {
         title TEXT NOT NULL,
         medium TEXT NOT NULL,
         inferred_year TEXT NOT NULL,
-        image_url TEXT,
-        thumbnail_url TEXT,
         artist_id INTEGER REFERENCES artists(id)
       );
 

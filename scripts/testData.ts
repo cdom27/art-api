@@ -17,9 +17,6 @@ export const testArtworks = [
     title: 'Jeanne Hébuterne',
     medium: 'Oil on canvas',
     inferredYear: '1918',
-    imageUrl: 'https://example.com/image.jpg',
-    thumbnailUrl: 'https://example.com/thumb.jpg',
     artistId: 0,
   },
 ];
-// testing ci pipeline trigger

@@ -23,8 +23,6 @@ export const artworks = pgTable('artworks', {
   title: text('title').notNull(),
   medium: text('medium').notNull(),
   inferredYear: text('inferred_year').notNull(),
-  imageUrl: text('image_url'),
-  thumbnailUrl: text('thumbnail_url'),
   artistId: integer('artist_id').references(() => artists.id),
 });
 
