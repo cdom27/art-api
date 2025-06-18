@@ -4,20 +4,21 @@ import {
   GCP_LOCAL_APP_CREDENTIALS,
 } from '../../../config/env';
 
-const storage = new Storage(
-  GCP_LOCAL_APP_CREDENTIALS
-    ? {
-        keyFilename: GCP_LOCAL_APP_CREDENTIALS,
-      }
-    : undefined
-);
-
-const bucketName = GCS_BUCKET_NAME!;
+const getStorage = () => {
+  return new Storage(
+    GCP_LOCAL_APP_CREDENTIALS
+      ? { keyFilename: GCP_LOCAL_APP_CREDENTIALS }
+      : undefined
+  );
+};
 
 export const generateSignedUrl = async (
   objectPath: string
 ): Promise<string> => {
   try {
+    const bucketName = GCS_BUCKET_NAME!;
+    const storage = getStorage();
+
     const [url] = await storage
       .bucket(bucketName)
       .file(objectPath)
@@ -29,7 +30,7 @@ export const generateSignedUrl = async (
     return url;
   } catch (error) {
     console.error(`Signed URL generation failed for ${objectPath}`);
-    console.error('[Bucket]:', bucketName);
+    console.error('[Bucket]:', GCS_BUCKET_NAME);
     console.error('[Credentials path]:', GCP_LOCAL_APP_CREDENTIALS);
     console.error('[Environment]:', {
       NODE_ENV: process.env.NODE_ENV,
