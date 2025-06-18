@@ -18,6 +18,7 @@ if (!dbUrl) {
 // GCS config
 const bucketName = process.env.GCS_BUCKET_NAME;
 const credentialsPath = process.env.GCP_LOCAL_APP_CREDENTIALS;
+const customCdnDomain = process.env.GCP_CUSTOM_CDN_DOMAIN;
 
 // validate dev credentials only in local env
 const isLocal = !process.env.CI && process.env.NODE_ENV !== 'production';
@@ -31,3 +32,4 @@ export const PORT = process.env.PORT || 3000;
 
 export const GCS_BUCKET_NAME = bucketName;
 export const GCP_LOCAL_APP_CREDENTIALS = credentialsPath;
+export const GCP_CUSTOM_CDN_DOMAIN = customCdnDomain;

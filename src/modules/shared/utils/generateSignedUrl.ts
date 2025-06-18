@@ -2,6 +2,7 @@ import { Storage } from '@google-cloud/storage';
 import {
   GCS_BUCKET_NAME,
   GCP_LOCAL_APP_CREDENTIALS,
+  GCP_CUSTOM_CDN_DOMAIN,
 } from '../../../config/env';
 
 const getStorage = () => {
@@ -10,6 +11,15 @@ const getStorage = () => {
       ? { keyFilename: GCP_LOCAL_APP_CREDENTIALS }
       : undefined
   );
+};
+
+const rewriteUrlToCdnDomain = (
+  signedUrl: string,
+  objectPath: string
+): string => {
+  const queryParams = signedUrl.split('?')[1];
+
+  return `${GCP_CUSTOM_CDN_DOMAIN}/${objectPath}?${queryParams}`;
 };
 
 export const generateSignedUrl = async (
@@ -27,7 +37,7 @@ export const generateSignedUrl = async (
         expires: Date.now() + 10 * 60 * 1000,
       });
 
-    return url;
+    return rewriteUrlToCdnDomain(url, objectPath);
   } catch (error) {
     console.error(`Signed URL generation failed for ${objectPath}`);
     console.error('[Bucket]:', GCS_BUCKET_NAME);
