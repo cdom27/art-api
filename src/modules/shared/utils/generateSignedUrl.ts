@@ -28,7 +28,16 @@ export const generateSignedUrl = async (
 
     return url;
   } catch (error) {
-    console.error(`Signed URL Error - Failed for ${objectPath}:`, error);
+    console.error(`Signed URL generation failed for ${objectPath}`);
+    console.error('[Bucket]:', bucketName);
+    console.error('[Credentials path]:', GCP_LOCAL_APP_CREDENTIALS);
+    console.error('[Environment]:', {
+      NODE_ENV: process.env.NODE_ENV,
+      CI: process.env.CI,
+      GOOGLE_APPLICATION_CREDENTIALS:
+        process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    });
+    console.error('[Original Error]:', error);
     throw new Error(`Failed to generate signed URL for ${objectPath}`);
   }
 };
