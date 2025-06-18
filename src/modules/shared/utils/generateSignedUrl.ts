@@ -17,13 +17,18 @@ const bucketName = GCS_BUCKET_NAME!;
 export const generateSignedUrl = async (
   objectPath: string
 ): Promise<string> => {
-  const [url] = await storage
-    .bucket(bucketName)
-    .file(objectPath)
-    .getSignedUrl({
-      action: 'read',
-      expires: Date.now() + 10 * 60 * 1000,
-    });
+  try {
+    const [url] = await storage
+      .bucket(bucketName)
+      .file(objectPath)
+      .getSignedUrl({
+        action: 'read',
+        expires: Date.now() + 10 * 60 * 1000,
+      });
 
-  return url;
+    return url;
+  } catch (error) {
+    console.error(`Signed URL Error - Failed for ${objectPath}:`, error);
+    throw new Error(`Failed to generate signed URL for ${objectPath}`);
+  }
 };
