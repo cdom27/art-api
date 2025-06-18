@@ -8,6 +8,7 @@ import {
 import { SearchQueryParams } from './querySchema';
 import { SearchResult } from './types';
 import { buildSearchConditions } from '../shared/utils/buildSearchConditions';
+import { enrichArtworks } from '../shared/utils/enrichArtwork';
 
 export const search = async (filters: SearchQueryParams) => {
   // prep response data structure
@@ -74,6 +75,9 @@ export const search = async (filters: SearchQueryParams) => {
     }
 
     result.artworks = await artworkQ;
+
+    //enrich artworks with signed urls
+    result.artworks = await enrichArtworks(result.artworks);
   }
 
   return result;
