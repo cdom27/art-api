@@ -64,7 +64,7 @@ jobs:
         run: npm run test:seed
 
       - name: Write GCP key to file
-        run: echo "${{ secrets.GCS.LOCAL_OBJECT_VIEWER_SERVICE_ACCOUNT }}" > $GCP_LOCAL_APP_CREDENTIALS
+        run: echo "${{ secrets.GCS_LOCAL_OBJECT_VIEWER_SERVICE_ACCOUNT }}" > $GCP_LOCAL_APP_CREDENTIALS
 
       - name: Run tests
         run: npm run test
