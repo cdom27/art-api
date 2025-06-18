@@ -28,6 +28,8 @@ jobs:
     env:
       NODE_ENV: test
       TEST_DB_URL: postgres://postgres:postgres@localhost:5432/test_db
+      GCS_BUCKET_NAME: ${{ secrets.GCS_BUCKET_NAME }}
+      GCP_LOCAL_APP_CREDENTIALS: /tmp/gcp-local-key.json
 
     steps:
       - name: Checkout repo
@@ -60,6 +62,9 @@ jobs:
 
       - name: Seed test database
         run: npm run test:seed
+
+      - name: Write GCP key to file
+        run: echo "${{ secrets.GCS.LOCAL_OBJECT_VIEWER_SERVICE_ACCOUNT }}" > $GCP_LOCAL_APP_CREDENTIALS
 
       - name: Run tests
         run: npm run test
