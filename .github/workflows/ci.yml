@@ -42,6 +42,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Set up Google Cloud credentials
+        run: echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > /tmp/gcp-test-sa.json
+
+      - name: Set GOOGLE_APPLICATION_CREDENTIALS for Node.js
+        run: echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-test-sa.json" >> $GITHUB_ENV
+
       - name: Install React client dependencies
         run: |
           cd client
