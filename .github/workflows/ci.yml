@@ -80,6 +80,13 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
+      - name: Export GOOGLE_APPLICATION_CREDENTIALS for Node.js
+        run: echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > /tmp/gcp-sa.json
+        shell: bash
+
+      - name: Set env var for Node.js to find credentials
+        run: echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-sa.json" >> $GITHUB_ENV
+
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
