@@ -9,11 +9,23 @@ const dbUrl =
     ? process.env.TEST_DB_URL || process.env.DB_URL
     : process.env.DB_URL;
 
-export const DB_URL = dbUrl;
-export const { PORT } = process.env;
-
-if (!DB_URL) {
+if (!dbUrl) {
   throw new Error(
-    'Database env vars are not fully defined (missing DB_URL or TEST_DB_URL)',
+    'Database env vars are not fully defined (missing DB_URL or TEST_DB_URL)'
   );
 }
+
+// GCS config
+const bucketName = process.env.GCS_BUCKET_NAME;
+const credentialsPath = process.env.GCP_LOCAL_APP_CREDENTIALS;
+
+// validate dev credentials only in local env
+if (process.env.NODE_ENV !== 'production' && !credentialsPath) {
+  throw new Error('GCP_LOCAL_APP_CREDENTIALS must be defined for local dev');
+}
+
+export const DB_URL = dbUrl;
+export const PORT = process.env.PORT || 3000;
+
+export const GCS_BUCKET_NAME = bucketName;
+export const GCP_LOCAL_APP_CREDENTIALS = credentialsPath;
