@@ -20,7 +20,9 @@ const bucketName = process.env.GCS_BUCKET_NAME;
 const credentialsPath = process.env.GCP_LOCAL_APP_CREDENTIALS;
 
 // validate dev credentials only in local env
-if (process.env.NODE_ENV !== 'production' && !credentialsPath) {
+const isLocal = !process.env.CI && process.env.NODE_ENV !== 'production';
+
+if (isLocal && !credentialsPath) {
   throw new Error('GCP_LOCAL_APP_CREDENTIALS must be defined for local dev');
 }
 
