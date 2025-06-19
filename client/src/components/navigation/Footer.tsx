@@ -8,20 +8,20 @@ export default function Footer() {
       <div className='flex items-center gap-2'>
         <img src={Logo} className='size-6 rounded-xs' />
         <Link to='/' className='font-bold text-xl'>
-          IAA
+          Art API
         </Link>
       </div>
 
       <div className='flex items-center gap-4'>
-        <Link
-          to='https://github.com/cdom27/influential-artists-api'
+        <a
+          href='https://github.com/cdom27/art-api'
           target='_blank'
           rel='noopener noreferrer'
-          className='bg-primary text-secondary flex items-center gap-2 text-sm py-2 px-4 rounded-sm'
+          className='bg-primary hover:bg-primary/90 text-secondary flex items-center gap-2 text-sm py-2 px-4 rounded-sm'
         >
           <img src={Gh} className='size-5' />
           <span>View Code</span>
-        </Link>
+        </a>
       </div>
     </footer>
   );
