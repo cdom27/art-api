@@ -34,8 +34,8 @@ app.use('/api/v1/search', searchRoutes);
 
 app.use('/api/internal', apiKeyRoutes);
 
-app.listen(PORT || 3000, () => {
-  console.log(`Server running on port ${PORT || 3000}`);
+app.listen(PORT || 8080, () => {
+  console.log(`Server running on port ${PORT || 8080}`);
 });
 
 export default app;
