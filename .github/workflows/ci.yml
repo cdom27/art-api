@@ -93,6 +93,9 @@ jobs:
       - name: Auth Docker to GCP Artifact Registry
         run: gcloud auth configure-docker us-west2-docker.pkg.dev
 
+      - name: Clean old build artifacts
+        run: rm -rf dist .build
+
       - name: Build & Push Docker image
         run: |
           docker build -t us-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/art-api/art-api .
@@ -101,7 +104,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy art-api \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/art-api \
+            --image us-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/art-api \
             --platform managed \
             --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated

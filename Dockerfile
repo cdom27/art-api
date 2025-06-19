@@ -7,9 +7,16 @@ RUN cd client && npm install && npm run build
 # build express api
 FROM node:20 AS server-build
 WORKDIR /app
-COPY . .
+
+# clean copy
+COPY package*.json ./
 RUN npm install
-RUN npm run build
+
+# copy only source
+COPY . .
+
+# force clean build
+RUN rm -rf dist .build && npm run build
 
 # create prod image
 FROM node:18-alpine
