@@ -44,7 +44,7 @@ export default function RegisterForm() {
 
       <button
         type='submit'
-        className='bg-black text-white py-2 px-4 rounded-sm disabled:opacity-50'
+        className='bg-black text-white py-2 px-4 rounded-sm disabled:opacity-50 hover:cursor-pointer hover:bg-black/80'
         disabled={isLoading}
       >
         {isLoading ? 'Generating Key...' : 'Generate Key'}

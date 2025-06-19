@@ -1,6 +1,6 @@
-# Artist API 🖼️
+# Art API 🖼️
 
-**Artist API** is a free and lightweight RESTful Web API that provides structured information about 50 of the most influential artists in history, along with selected public domain artworks.
+**Art API** is a free and lightweight RESTful Web API that provides structured information about 50 of the most influential artists in history, along with selected public domain artworks.
 
 Developers can access detailed artist bios, artwork data, and run keyword-based search queries. Whether you’re building educational apps, creative galleries, or simply experimenting, this API is a reliable resource.
 
@@ -20,7 +20,7 @@ You can get started by [generating a free public API key](https://art.cidomingue
   - [Artists](#artists)
   - [Artworks](#artworks)
   - [Search](#search)
-- [Projects Using Artist API](#projects-using-artist-api)
+- [Projects Using Art API](#projects-using-art-api)
 - [Plans for v2](#plans-for-v2)
 - [Author](#author)
 - [License](#license)
@@ -29,14 +29,25 @@ You can get started by [generating a free public API key](https://art.cidomingue
 
 ## Tech Stack
 
-The current API version (v1) is deployed on **Google Cloud Platform** and built with:
+The current API version (v1) is built with:
 
 - Node.js / Express.js
 - TypeScript
-- PostgreSQL
+- PostgreSQL (hosted on neon)
 - Drizzle ORM
 - Zod (for validation)
-- Bcrypt (for secure key generation)
+- Bcrypt (for secure key generation and auth)
+
+---
+
+## Deployment infrastructure
+
+The API is hosted on **Google Cloud Platform**, using:
+
+- **Cloud Run** for serverless container deployment
+- **Application Load Balancer**
+- **Cloud Storage** to serve images
+- **Cloud CDN** with signed storage URLs for image delivery
 
 ---
 
@@ -77,9 +88,14 @@ type Artwork = {
   title: string;
   medium: string;
   inferredYear: string;
-  imageUrl: string;
-  thumbnailUrl: string;
+  fullImageUrl: string;
+  thumbnailImageUrl: string;
   artistId: number;
+};
+
+export type SearchResult = {
+  artists: Artist[];
+  artworks: Artwork[];
 };
 
 export type ApiResponse<T> = {
@@ -95,15 +111,15 @@ export type ApiResponse<T> = {
 
 Before making requests, generate your free [API key](https://art.cidominguez.com/docs#register).
 
-This section assumes you're using **Vite** or another build tool that supports `.env` variables. If you're using a different setup (Next.js, raw HTML, etc.), adapt accordingly.
+> **Note:** All code snippets assume you're using **Vite with TypeScript**, which exposes `.env` variables via `import.meta.env` and uses the `VITE_` prefix. If you're using a different setup (e.g. Next.js, plain HTML/JS, SpringBoot) adapt accordingly as build tools differ in how they expose and manage environment variables.
 
 ### Getting Started
 
 Create a `.env` file in your root directory and add:
 
 ```
-VITE_IAA_BASE_URL=https://art.cidominguez.com/api/v1
-VITE_IAA_PUBLIC_KEY=<YOUR_API_KEY_HERE>
+VITE_ART_API_BASE_URL=https://art.cidominguez.com/api/v1
+VITE_ART_API_PUBLISHABLE_KEY=<YOUR_API_KEY_HERE>
 ```
 
 In your code, load these values via `import.meta.env` (in Vite), or however your framework provides env variables.
@@ -112,41 +128,41 @@ In your code, load these values via `import.meta.env` (in Vite), or however your
 
 ### Making Requests
 
-All requests must include your API key in the **headers** of the request as 'x-api-key':
+All requests must include your API key in the **headers** of the request as `x-api-key`:
 
-#### Example: Get French artists
+#### Example: Find French artists
 
 ```ts
 const response = await fetch(
-  'https://art.cidominguez.com/api/v1/artists?nationality=French',
+  `${import.meta.env.VITE_ART_API_BASE_URL}/artists?nationality=French`,
   {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': import.meta.env.VITE_IAA_PUBLIC_KEY,
+      'x-api-key': import.meta.env.VITE_ART_API_PUBLISHABLE_KEY,
     },
   }
 );
 
-const result = await response.json();
-console.log(result);
+const data: ApiResponse<Artist[]> = await response.json();
+console.log(data);
 ```
 
-#### Example: Search for artworks by title
+#### Example: Find artworks by title
 
 ```ts
 const response = await fetch(
-  'https://art.cidominguez.com/api/v1/artworks?title=lilies',
+  `${import.meta.env.VITE_ART_API_BASE_URL}/artworks?title=lilies`,
   {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': import.meta.env.VITE_IAA_PUBLIC_KEY,
+      'x-api-key': import.meta.env.VITE_ART_API_PUBLISHABLE_KEY,
     },
   }
 );
 
-const data = await response.json();
+const data: ApiResponse<Artwork[]> = await response.json();
 console.log(data);
 ```
 
@@ -210,29 +226,29 @@ Performs a global keyword-based search across both artists and artworks.
 - `q` – Keyword string (e.g., `q=van go`)
 - All parameters from [Artists](#artists) and [Artworks](#artworks) are supported
 
-#### Example
+#### Example: Search for data containing `monet` and `French`
 
 ```ts
 const response = await fetch(
-  'https://art.cidominguez.com/api/v1/search?q=monet&nationality=French',
+  `${import.meta.env.VITE_ART_API_BASE_URL}/search?q=monet&nationality=French`,
   {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': import.meta.env.VITE_IAA_PUBLIC_KEY,
+      'x-api-key': import.meta.env.VITE_ART_API_PUBLISHABLE_KEY,
     },
   }
 );
 
-const json = await response.json();
-console.log(json);
+const data: ApiResponse<SearchResult> = await response.json();
+console.log(data);
 ```
 
 ---
 
-## Projects Using Artist API
+## Projects Using Art API
 
-Have you built something with Artist API? Open a PR to be featured here.
+Have you built something with the Art API? Open a PR to be featured here.
 
 ---
 
@@ -245,8 +261,8 @@ The next release (v2) will prioritize developer experience, performance, and sup
 1. **Year Normalization**
    Improve support for inferred or ambiguous artwork dates with partial range support (e.g., `1870s`, `early 1800s`).
 
-2. **Image Proxy Parameters**
-   New `imageUrl` generation with support for `width`, `height`, and `fileType` (e.g., WebP, JPEG). This change will remove `primaryUrl` and `thumbnailUrl`.
+2. **Flexible Image Service**
+   New `fullImageUrl` and `thumbnailImageUrl` generation service with support for `width`, `height`, and `fileType` (e.g., WebP, JPEG).
 
 3. **More Open Sources**
    Additional data sources will be integrated, with proper attribution listed in the documentation.
