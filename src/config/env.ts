@@ -28,7 +28,7 @@ if (isLocal && !credentialsPath) {
 }
 
 export const DB_URL = dbUrl;
-export const PORT = process.env.PORT || 3000;
+export const PORT = process.env.PORT;
 
 export const GCS_BUCKET_NAME = bucketName;
 export const GCP_LOCAL_APP_CREDENTIALS = credentialsPath;
