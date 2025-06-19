@@ -8,7 +8,7 @@ import { enrichArtwork, enrichArtworks } from '../shared/utils/enrichArtwork';
 
 export const getFilteredArtworks = async (
   filters: ArtworkQueryParams
-): Promise<Artwork[]> => {
+): Promise<ArtworkWithSignedImageUrls[]> => {
   const conditions = getArtworkConditions(filters);
 
   const q = db.select().from(artworks);
@@ -47,7 +47,9 @@ export const getRandomArtwork = async (
   return await enrichArtwork(result[0]);
 };
 
-export const getArtworkById = async (id: number): Promise<Artwork> => {
+export const getArtworkById = async (
+  id: number
+): Promise<ArtworkWithSignedImageUrls> => {
   const result = await db
     .select()
     .from(artworks)
@@ -60,7 +62,7 @@ export const getArtworkById = async (id: number): Promise<Artwork> => {
 
 export const getArtworksByArtistId = async (
   artistId: number
-): Promise<Artwork[]> => {
+): Promise<ArtworkWithSignedImageUrls[]> => {
   const result = await db
     .select()
     .from(artworks)
