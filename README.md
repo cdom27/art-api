@@ -11,6 +11,7 @@ You can get started by [generating a free public API key](https://art.cidomingue
 ## Table of Contents
 
 - [Tech Stack](#tech-stack)
+- [Infrastructure Overview](#infrastructure-overview)
 - [API Information](#api-information)
 - [TypeScript Types](#typescript-types)
 - [Usage](#usage)
@@ -40,7 +41,7 @@ The current API version (v1) is built with:
 
 ---
 
-## Deployment infrastructure
+## Infrastructure Overview
 
 The API is hosted on **Google Cloud Platform**, using:
 
