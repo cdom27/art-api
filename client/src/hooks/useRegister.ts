@@ -19,9 +19,7 @@ export default function useRegister() {
       console.log('Api response:', result);
 
       if (!resp.ok || !result.data) {
-        throw new Error(
-          `${result.status}: ${result.message}` || 'Failed to register dev site'
-        );
+        throw new Error(`${result.status}: ${result.message}`);
       }
 
       // set pubKey to the generate key recieved
