@@ -9,21 +9,12 @@ const getStorage = () => {
   return new Storage(
     GCP_LOCAL_APP_CREDENTIALS
       ? { keyFilename: GCP_LOCAL_APP_CREDENTIALS }
-      : undefined
+      : undefined,
   );
 };
 
-const rewriteUrlToCdnDomain = (
-  signedUrl: string,
-  objectPath: string
-): string => {
-  const queryParams = signedUrl.split('?')[1];
-
-  return `${GCP_CUSTOM_CDN_DOMAIN}/${objectPath}?${queryParams}`;
-};
-
 export const generateSignedUrl = async (
-  objectPath: string
+  objectPath: string,
 ): Promise<string> => {
   try {
     const bucketName = GCS_BUCKET_NAME!;
@@ -37,7 +28,7 @@ export const generateSignedUrl = async (
         expires: Date.now() + 10 * 60 * 1000,
       });
 
-    return rewriteUrlToCdnDomain(url, objectPath);
+    return url;
   } catch (error) {
     console.error(`Signed URL generation failed for ${objectPath}`);
     console.error('[Bucket]:', GCS_BUCKET_NAME);
