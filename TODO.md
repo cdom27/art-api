@@ -1,0 +1,2 @@
+- remove logs from prod
+- update all old url references to swe.cd
