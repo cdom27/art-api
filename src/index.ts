@@ -25,8 +25,11 @@ app.use(speedLimiter);
 app.use('/api/v1', apiKeyAuth);
 
 // serve client
-const clientBuildPath = path.join(__dirname, '../client/dist');
-app.use(express.static(clientBuildPath));
+const staticPath = path.join(__dirname, '../client');
+app.use(express.static(staticPath));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(staticPath, 'index.html'));
+});
 
 app.use('/api/v1/artists', artistRoutes);
 app.use('/api/v1/artworks', artworkRoutes);
