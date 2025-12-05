@@ -1,3 +1,96 @@
-h1 {
-    color: blue;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+:root {
+    --font-sans: 'IBM Plex Sans', sans-serif;
+    --color-content-500: #111111;
+    --color-content-100: #bdbdbd;
+    --color-content-50: #f4f3ee;
+
+    --color-link-500: #3e9792;
+    --color-link-400: #487594;
+    --color-link-100: #0077cd;
+    --color-link-50: #0091f9;
+
+    background-color: var(--color-content-50);
+    color: var(--color-content-500);
+    font-family: var(--font-sans);
+    font-weight: normal;
+}
+
+header {
+    padding: 1rem 0.5rem;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    & > :first-child {
+        margin-bottom: 1.75rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    & > :nth-child(3) {
+        margin: 0.5rem 0;
+    }
+
+    & > :last-child {
+        display: flex;
+    }
+}
+
+a,
+.nav-link {
+    text-decoration: none;
+}
+
+.nav-link {
+    color: inherit;
+}
+
+.nav-link:hover {
+    color: var(--color-link-500);
+}
+
+.outbound-link {
+    display: flex;
+    align-self: flex-start;
+    align-items: center;
+}
+
+.outbound-link img {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        & > :first-child {
+            margin-bottom: 0;
+        }
+
+        & > :nth-child(2) {
+            margin-left: auto;
+        }
+
+        :nth-child(3),
+        :nth-child(4) {
+            margin-left: 1rem;
+        }
+    }
+}
+
+@media (min-width: 1440px) {
+    header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 0;
+    }
 }
