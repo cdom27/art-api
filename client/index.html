@@ -36,6 +36,62 @@
             </nav>
         </header>
 
-        <h1>Hello world</h1>
+        <main>
+            <section class="grid-container">
+                <div>
+                    <h1>Metadata for Public Domain Artwork</h1>
+                    <p>
+                        A free API that provides structured metadata of selected
+                        public domain artworks and their artists.
+                    </p>
+                    <p>
+                        No sign-in or credit card required. You can get started
+                        by
+                        <a href="/#generate-key" class="inline-link"
+                            >generating a free public API key below</a
+                        >.
+                    </p>
+                </div>
+
+                <figure>
+                    <img
+                        src="./assets/monet.jpg"
+                        alt="The Cliff Walk at Pourville by Claude Money"
+                        class="artwork"
+                    />
+                    <figcaption>The Cliff Walk at Pourville</figcaption>
+                </figure>
+            </section>
+
+            <section id="generate-key">
+                <h2>Generate Your Key</h2>
+                <p>Register your domain to generate a public API key.</p>
+                <form action="/register" method="post">
+                    <label for="domain">Your Domain</label>
+                    <input
+                        type="text"
+                        id="domain"
+                        name="domain"
+                        placeholder="https://swe.cd"
+                        required
+                    />
+                    <button type="submit">Generate Key</button>
+                </form>
+                <!--<code>your api key here</code>-->
+            </section>
+
+            <section id="configuration">
+                <h2>Basic Configuration</h2>
+                <p>
+                    For a comprehensive guide to all the API endpoints, please
+                    refer to the documentation in the
+                    <a
+                        href="https://github.com/cdom27/art-api"
+                        class="inline-link"
+                        >GitHub repository</a
+                    >.
+                </p>
+            </section>
+        </main>
     </body>
 </html>
