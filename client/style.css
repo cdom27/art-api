@@ -4,6 +4,7 @@
     --font-sans: 'IBM Plex Sans', sans-serif;
     --color-content-500: #111111;
     --color-content-100: #bdbdbd;
+    --color-content-75: #dedede;
     --color-content-50: #f4f3ee;
 
     --color-link-500: #3e9792;
@@ -12,6 +13,8 @@
     --color-link-50: #0091f9;
 
     --color-footer-500: #5e6851;
+
+    --color-code-100: #33bc61;
 
     background-color: var(--color-content-50);
     color: var(--color-content-500);
@@ -93,7 +96,8 @@ ul {
 }
 
 h1,
-h2 {
+h2,
+h3 {
     margin: 0;
     font-weight: 500;
 }
@@ -140,7 +144,7 @@ form {
 
 label {
     font-weight: 500;
-    margin-bottom: 0.25rem;
+    font-size: 1.17rem;
 }
 
 input {
@@ -148,6 +152,7 @@ input {
     border: 1.5px solid var(--color-content-100);
     border-radius: 0.25rem;
     padding: 0.5rem;
+    margin: 1em 0;
 
     &::placeholder {
         font-weight: 300;
@@ -157,10 +162,20 @@ input {
 
 button {
     border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+#form-submit {
     background-color: var(--color-content-500);
     color: var(--color-content-50);
     padding: 0.5rem 0;
-    border-radius: 0.25rem;
+}
+
+#copy-btn {
+    background-color: var(--color-content-75);
+    padding: 0.5rem;
+    margin-left: auto;
 }
 
 footer {
@@ -186,6 +201,39 @@ hr {
     justify-content: space-between;
 }
 
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+#file {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+
+    & > span {
+        font-style: italic;
+    }
+}
+
+pre {
+    overflow-x: scroll;
+    max-width: 100%;
+    white-space: unset;
+}
+
+pre {
+    border: 1px solid var(--color-content-100);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+.var-value {
+    color: var(--color-code-100);
+}
+
 @media (min-width: 768px) {
     ul {
         display: flex;
@@ -209,9 +257,23 @@ hr {
     #footer-content-wrapper {
         padding: 2rem 0;
     }
+
+    .grid-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4rem;
+    }
+
+    .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4rem;
+    }
 }
 
 @media (min-width: 1440px) {
+    main {
+        gap: 8rem;
+    }
+
     header {
         max-width: 1200px;
         margin: 0 auto;
@@ -222,5 +284,23 @@ hr {
         max-width: 1200px;
         margin: 0 auto;
         padding: 4rem 0;
+    }
+
+    section {
+        width: 1200px;
+        margin: 0 auto;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+
+        & > figure {
+            grid-column-start: 3;
+        }
+    }
+
+    .grid-2 {
+        margin-right: 20rem;
     }
 }

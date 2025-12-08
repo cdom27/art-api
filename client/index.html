@@ -66,31 +66,31 @@
             <section id="generate-key">
                 <h2>Generate Your Key</h2>
                 <p>Register your domain to generate a public API key.</p>
-                <form action="/register" method="post">
-                    <label for="domain">Your Domain</label>
-                    <input
-                        type="text"
-                        id="domain"
-                        name="domain"
-                        placeholder="https://swe.cd"
-                        required
-                    />
-                    <button type="submit">Generate Key</button>
-                </form>
-                <!--<code>your api key here</code>-->
-            </section>
+                <div class="grid-2">
+                    <div>
+                        <form action="/register" method="post">
+                            <label for="domain">Your Domain</label>
+                            <input
+                                type="text"
+                                id="domain"
+                                name="domain"
+                                placeholder="https://swe.cd"
+                                required
+                            />
+                            <button type="submit" id="form-submit">Generate Key</button>
+                        </form>
+                    </div>
 
-            <section id="configuration">
-                <h2>Basic Configuration</h2>
-                <p>
-                    For a comprehensive guide to all the API endpoints, please
-                    refer to the documentation in the
-                    <a
-                        href="https://github.com/cdom27/art-api"
-                        class="inline-link"
-                        >GitHub repository</a
-                    >.
-                </p>
+                    <div>
+                        <h3>Environement Variables</h3>
+                        <pre>
+                            <div id="file"><span>.env</span><button id="copy-btn">Copy</button></div>
+                        <code>
+                        <span>OA_API_PUBLISHABLE_KEY</span><span>=</span><span class="var-value">some_key_here</span><br/>
+                        <span>OA_API_BASE_URL</span><span>=</span><span class="var-value">https://openart.work/api/v1</span>
+                        </code>
+                    </div>
+                </div>
             </section>
         </main>
 
