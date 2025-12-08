@@ -84,8 +84,8 @@
                     <div>
                         <h3>Environement Variables</h3>
                         <pre>
-                            <div id="file"><span>.env</span><button id="copy-btn">Copy</button></div>
-                        <code>
+                            <div id="file"><span>.env</span><button id="copy-btn" onclick="copyEnv()">Copy</button></div>
+                        <code id="env">
                         <span>OA_API_PUBLISHABLE_KEY</span><span>=</span><span class="var-value">some_key_here</span><br/>
                         <span>OA_API_BASE_URL</span><span>=</span><span class="var-value">https://openart.work/api/v1</span>
                         </code>
@@ -150,5 +150,18 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+          function copyEnv() {
+            const vars = document.getElementById('env');
+            navigator.clipboard.writeText(vars.innerText);
+
+            const btn = document.getElementById('copy-btn');
+            btn.innerHTML = 'Copied';
+            setTimeout(() => {
+                btn.innerHTML = 'Copy';
+            }, 5000);
+          }
+        </script>
     </body>
 </html>
