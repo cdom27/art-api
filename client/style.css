@@ -207,7 +207,13 @@ hr {
     gap: 2rem;
 }
 
-#file {
+#env {
+    border: 1px solid var(--color-content-100);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+#env-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -216,22 +222,6 @@ hr {
     & > span {
         font-style: italic;
     }
-}
-
-pre {
-    overflow-x: scroll;
-    max-width: 100%;
-    white-space: unset;
-}
-
-pre {
-    border: 1px solid var(--color-content-100);
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-}
-
-.var-value {
-    color: var(--color-code-100);
 }
 
 @media (min-width: 768px) {
