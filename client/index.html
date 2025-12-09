@@ -68,10 +68,10 @@
                 <h2>Generate Your Key</h2>
                 <p>Register your domain to generate a public API key.</p>
                 <div class="grid-2">
-                    <form action="/register" method="post">
+                    <form id="register">
                         <label for="domain">Your Domain</label>
                         <input
-                            type="text"
+                            type="url"
                             id="domain"
                             name="domain"
                             placeholder="https://swe.cd"
@@ -80,6 +80,7 @@
                         <button type="submit" id="form-submit">
                             Generate Key
                         </button>
+                        <p id="message">hello</p>
                     </form>
 
                     <div>
@@ -93,7 +94,7 @@
                             </div>
                             <pre
                                 id="env-content"
-                            ><code class="language-javascript">OA_API_PUBLISHABLE_KEY=some_key_here</code><br/><code class="language-javascript">OA_API_BASE_URL=https://openart.work/api/v1</code></pre>
+                            ><code class="language-javascript" id="key">OA_API_PUBLISHABLE_KEY=some_key_here</code><br/><code class="language-javascript">OA_API_BASE_URL=https://openart.work/api/v1</code></pre>
                         </div>
                     </div>
                 </div>
@@ -168,6 +169,50 @@
                     btn.innerHTML = 'Copy';
                 }, 5000);
             }
+
+            const form = document.querySelector('#register');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const domainInput = document.querySelector('#domain');
+                const domain = domainInput.value.trim();
+
+                try {
+                    const resp = await fetch('/api/internal/register-domain', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ domain }),
+                    });
+
+                    const result = await resp.json();
+
+                    const message = document.querySelector('#message');
+                    if (resp.ok) {
+                        // update ui with key and message
+                        message.textContent = result.message;
+                        message.style.display = 'block';
+                        message.style.color = 'var(--color-code-100)';
+
+                        const key = document.querySelector('#key');
+                        key.textContent = `OA_API_PUBLISHABLE_KEY=${result.data}`;
+
+                        if (window.Prism) {
+                            Prism.highlightElement(key);
+                        }
+                    } else {
+                        message.textContent = result.message;
+                        message.style.display = 'block';
+                        message.style.color = 'var(--color-code-500)';
+                    }
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    form.reset();
+                }
+            });
         </script>
         <script src="./prism/prism.js"></script>
     </body>

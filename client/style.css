@@ -14,6 +14,7 @@
 
     --color-footer-500: #5e6851;
 
+    --color-code-500: #bc3333;
     --color-code-100: #33bc61;
 
     background-color: var(--color-content-50);
@@ -152,7 +153,7 @@ input {
     border: 1.5px solid var(--color-content-100);
     border-radius: 0.25rem;
     padding: 0.5rem;
-    margin: 1em 0;
+    margin: 1rem 0;
 
     &::placeholder {
         font-weight: 300;
@@ -211,6 +212,7 @@ hr {
     border: 1px solid var(--color-content-100);
     border-radius: 0.25rem;
     padding: 0.5rem;
+    margin: 1rem 0;
 }
 
 #env-header {
@@ -222,6 +224,11 @@ hr {
     & > span {
         font-style: italic;
     }
+}
+
+#message {
+    text-align: center;
+    display: none;
 }
 
 @media (min-width: 768px) {
