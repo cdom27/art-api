@@ -9,7 +9,7 @@
     <body>
         <header>
             <nav>
-                <ul>
+                <ul class="nav-list">
                     <li>
                         <a href="/" class="nav-link">Open Artwork API</a>
                     </li>
@@ -59,8 +59,11 @@
                         src="./assets/monet.jpg"
                         alt="The Cliff Walk at Pourville by Claude Money"
                         class="artwork"
+                        id="artwork"
                     />
-                    <figcaption>The Cliff Walk at Pourville</figcaption>
+                    <figcaption id="artwork-title">
+                        The Cliff Walk at Pourville
+                    </figcaption>
                 </figure>
             </section>
 
@@ -88,7 +91,10 @@
                         <div id="env">
                             <div id="env-header">
                                 <span>.env</span
-                                ><button id="copy-btn" onclick="copyEnv()">
+                                ><button
+                                    id="env-copy-btn"
+                                    onclick="copyCode('env')"
+                                >
                                     Copy
                                 </button>
                             </div>
@@ -99,11 +105,83 @@
                     </div>
                 </div>
             </section>
+
+            <section id="configuration">
+                <h2>Configuration</h2>
+                <p>
+                    Get started with your first API call. For a comprehensive
+                    guide, please refer to the
+                    <a
+                        href="https://github.com/cdom27/art-api"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-link outbound-link"
+                        ><span>repo documentation</span
+                        ><img
+                            src="./assets/link.svg"
+                            alt="External link arrow to GitHub"
+                    /></a>
+                    .
+                </p>
+
+                <div class="grid-2 grid-full">
+                    <div>
+                        <h3>Authentication</h3>
+                        <p>
+                            When making a call, include your api key in the
+                            request header as
+                            <var>x-api-key</var>:
+                        </p>
+                        <div id="use-artwork">
+                            <div id="use-artwork-header">
+                                <span>use-artist.ts</span
+                                ><button
+                                    id="use-artwork-copy-btn"
+                                    onclick="copyCode('use-artwork')"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+                            <pre
+                                id="use-artwork-content"
+                            ><code class="language-javascript">const response = await fetch(
+    `${import.meta.env.OA_API_BASE_URL}/artists?nationality=French`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': import.meta.env.OA_API_PUBLISHABLE_KEY,
+      },
+    },
+);
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="grid-3">
+                        <div>
+                            <h3>Rate Limiting</h3>
+                            <ul>
+                                <li>200 requests per 15 minutes</li>
+                                <li>
+                                    After the first 75 requests, a delay of up
+                                    to 3 seconds per request is applied
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3>Image Licensing</h3>
+                            <p>All images served are from the public domain.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <footer>
             <div id="footer-content-wrapper">
-                <ul>
+                <ul class="nav-list">
                     <li>
                         <a href="/" class="nav-link">Open Artwork API</a>
                     </li>
@@ -159,15 +237,15 @@
         </footer>
 
         <script>
-            function copyEnv() {
-                const vars = document.getElementById('env-content');
+            function copyCode(filePrefix) {
+                const vars = document.getElementById(`${filePrefix}-content`);
                 navigator.clipboard.writeText(vars.innerText);
 
-                const btn = document.getElementById('copy-btn');
+                const btn = document.getElementById(`${filePrefix}-copy-btn`);
                 btn.innerHTML = 'Copied';
                 setTimeout(() => {
                     btn.innerHTML = 'Copy';
-                }, 5000);
+                }, 3500);
             }
 
             const form = document.querySelector('#register');

@@ -31,7 +31,7 @@ header {
     padding: 1rem;
 }
 
-ul {
+.nav-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -76,6 +76,7 @@ ul {
 }
 
 .inline-link {
+    display: inline;
     color: var(--color-link-100);
 
     &:hover {
@@ -208,14 +209,20 @@ hr {
     gap: 2rem;
 }
 
-#env {
+#env,
+#use-artwork {
     border: 1px solid var(--color-content-100);
     border-radius: 0.25rem;
     padding: 0.5rem;
     margin: 1rem 0;
 }
 
-#env-header {
+var {
+    color: var(--color-code-100);
+}
+
+#env-header,
+#use-artwork-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -226,13 +233,19 @@ hr {
     }
 }
 
+#use-artwork-copy-btn,
+#env-copy-btn {
+    background-color: var(--color-content-75);
+    padding: 0.25rem 0.75rem;
+}
+
 #message {
     text-align: center;
     display: none;
 }
 
 @media (min-width: 768px) {
-    ul {
+    .nav-list {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -263,6 +276,12 @@ hr {
     .grid-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 4rem;
+    }
+
+    #configuration {
+        & > p {
+            width: 50%;
+        }
     }
 }
 
@@ -299,5 +318,15 @@ hr {
 
     .grid-2 {
         margin-right: 20rem;
+    }
+
+    .grid-full {
+        margin-right: 0;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem;
     }
 }
