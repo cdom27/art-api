@@ -1,10 +1,10 @@
-# Art API 🖼️
+# Open Artwork API
 
-**Art API** is a free and lightweight RESTful Web API that provides structured information about 50 of the most influential artists in history, along with selected public domain artworks.
+**Open Artwork** is a free RESTful Web API that provides structured metadata of the 50 most influential artists in history, along with selected public domain artworks.
 
 Developers can access detailed artist bios, artwork data, and run keyword-based search queries. Whether you’re building educational apps, creative galleries, or simply experimenting, this API is a reliable resource.
 
-You can get started by [generating a free public API key](https://art.cidominguez.com/docs). No sign-in or credit card required.
+You can get started by [generating a free public API key](https://openart.work). No sign-in or credit card required.
 
 ---
 
@@ -34,10 +34,10 @@ The current API version (v1) is built with:
 
 - Node.js / Express.js
 - TypeScript
-- PostgreSQL (hosted on neon)
+- PostgreSQL
 - Drizzle ORM
-- Zod (for validation)
-- Bcrypt (for secure key generation and auth)
+- Zod
+- Bcrypt
 
 ---
 
@@ -45,18 +45,17 @@ The current API version (v1) is built with:
 
 The API is hosted on **Google Cloud Platform**, using:
 
-- **Cloud Run** for serverless container deployment
-- **Application Load Balancer**
-- **Cloud Storage** to serve images
-- **Cloud CDN** with signed storage URLs for image delivery
+- Cloud Run (Dockerfile and GitHub Actions)
+- Application Load Balancer (with a CDN for both the client and signed image asset urls)
+- Cloud Storage
 
 ---
 
 ## API Information
 
 - **Version**: v1
-- **Base URL**: `https://art.cidominguez.com/api/v1/`
-- **Authentication**: Requires a [free API key](https://art.cidominguez.com/docs#register). Include it in the request header as 'x-api-key'.
+- **Base URL**: `https://openart.work/api/v1/`
+- **Authentication**: Requires a [free API key](https://openart.work). Include it in the request header as 'x-api-key'.
 - **Rate Limiting**:
   - 200 requests per 15 minutes
   - After 75 requests, a delay of up to 3 seconds per request is applied
@@ -94,12 +93,12 @@ type Artwork = {
   artistId: number;
 };
 
-export type SearchResult = {
+type SearchResult = {
   artists: Artist[];
   artworks: Artwork[];
 };
 
-export type ApiResponse<T> = {
+type ApiResponse<T> = {
   status: number;
   message: string;
   data: T | null;
@@ -110,20 +109,18 @@ export type ApiResponse<T> = {
 
 ## Usage
 
-Before making requests, generate your free [API key](https://art.cidominguez.com/docs#register).
+Before making requests, generate your free [API key](https://openart.work).
 
-> **Note:** All code snippets assume you're using **Vite with TypeScript**, which exposes `.env` variables via `import.meta.env` and uses the `VITE_` prefix. If you're using a different setup (e.g. Next.js, plain HTML/JS, SpringBoot) adapt accordingly as build tools differ in how they expose and manage environment variables.
+> **Note:** All code snippets assume you're using **Vite with TypeScript**, which exposes `.env` variables via `import.meta.env` and uses the `VITE_` prefix. If you're using a different stack (e.g. Next.js, plain HTML/JS, SpringBoot) adapt accordingly as build tools differ in how they expose and manage environment variables.
 
 ### Getting Started
 
 Create a `.env` file in your root directory and add:
 
 ```
-VITE_ART_API_BASE_URL=https://art.cidominguez.com/api/v1
-VITE_ART_API_PUBLISHABLE_KEY=<YOUR_API_KEY_HERE>
+VITE_OA_API_BASE_URL=https://openart.work/api/v1
+VITE_OA_API_PUBLISHABLE_KEY=<YOUR_API_KEY_HERE>
 ```
-
-In your code, load these values via `import.meta.env` (in Vite), or however your framework provides env variables.
 
 ---
 
@@ -169,7 +166,7 @@ console.log(data);
 
 ---
 
-## RESTful Endpoints
+## Endpoints
 
 ### Artists
 
@@ -181,7 +178,7 @@ console.log(data);
 - `birthYearMin`, `birthYearMax` – Filter by birth year
 - `deathYearMin`, `deathYearMax` – Filter by death year
 
-#### Endpoints
+#### Artist Endpoints
 
 - `GET /artists`
   Returns all artists ordered by `id` ascending.
@@ -205,7 +202,7 @@ console.log(data);
 - `medium` – Exact match
 - `artistId` – Filter by artist ID
 
-#### Endpoints
+#### Artwork Endpoints
 
 - `GET /artworks`
   Returns all artworks ordered by `id`.
