@@ -54,7 +54,12 @@
                     </p>
                 </div>
 
-                <figure>
+                <div id="loading-figure">
+                    <div id="loading-artwork"></div>
+                    <div id="loading-title"></div>
+                </div>
+
+                <figure id="artwork-figure">
                     <img
                         src="./assets/monet.jpg"
                         alt="The Cliff Walk at Pourville by Claude Money"
@@ -237,6 +242,40 @@
         </footer>
 
         <script>
+            async function fetchArtwork() {
+                try {
+                    const resp = await fetch('/api/v1/artworks/random', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-api-key':
+                                'f8fbfbd4087df136895df605e5c278734118e84066050c26bee4b654cf1a0031',
+                        },
+                    });
+
+                    const result = await resp.json();
+
+                    if (resp.ok) {
+                        document.getElementById(
+                            'loading-figure',
+                        ).style.display = 'none';
+
+                        document.getElementById(
+                            'artwork-figure',
+                        ).style.display = 'flex';
+
+                        document.getElementById('artwork').src =
+                            result.data.thumbnailImageUrl;
+                        document.getElementById('artwork-title').textContent =
+                            result.data.title;
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            fetchArtwork();
+
             function copyCode(filePrefix) {
                 const vars = document.getElementById(`${filePrefix}-content`);
                 navigator.clipboard.writeText(vars.innerText);

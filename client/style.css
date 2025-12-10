@@ -121,10 +121,16 @@ main {
 .artwork {
     width: 100%;
     border-radius: 0.25rem;
+    height: 250px;
+    object-fit: cover;
 }
 
 figure {
-    display: flex;
+    display: none;
+}
+
+figure,
+#loading-figure {
     flex-direction: column;
     margin: 0;
     gap: 0.5rem;
@@ -133,6 +139,37 @@ figure {
 figcaption {
     text-align: center;
     font-style: italic;
+}
+
+#loading-figure {
+    display: flex;
+}
+
+#loading-artwork,
+#loading-title {
+    background-color: var(--color-content-75);
+    border-radius: 0.25rem;
+    animation: blink 2s linear infinite;
+}
+
+#loading-artwork {
+    height: 250px;
+}
+
+#loading-title {
+    height: 20px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
 }
 
 form {
@@ -311,7 +348,8 @@ var {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0;
 
-        & > figure {
+        & > figure,
+        & > #loading-figure {
             grid-column-start: 3;
         }
     }
