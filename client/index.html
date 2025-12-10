@@ -1,13 +1,336 @@
-<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/ico" href="./public/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Art API</title>
-  </head>
-  <body>
-    <div id="root" className="scroll-smooth"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Open Artwork API</title>
+        <link rel="stylesheet" href="./style.css" />
+        <link rel="stylesheet" href="./prism/prism.css" />
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul class="nav-list">
+                    <li>
+                        <a href="/" class="nav-link">Open Artwork API</a>
+                    </li>
+                    <li>
+                        <a href="/#generate-key" class="nav-link">Get a Key</a>
+                    </li>
+                    <li>
+                        <a href="/#configuration" class="nav-link"
+                            >Configuration</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/cdom27/art-api"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="nav-link outbound-link"
+                            ><span>Source Code</span
+                            ><img
+                                src="./assets/link.svg"
+                                alt="External link arrow to GitHub"
+                        /></a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="grid-container">
+                <div>
+                    <h1>Metadata for Public Domain Artwork</h1>
+                    <p>
+                        A free API that provides structured metadata of selected
+                        public domain artworks and their artists.
+                    </p>
+                    <p>
+                        No sign-in or credit card required. You can get started
+                        by
+                        <a href="/#generate-key" class="inline-link"
+                            >generating a free public API key below</a
+                        >.
+                    </p>
+                </div>
+
+                <div id="loading-figure">
+                    <div id="loading-artwork"></div>
+                    <div id="loading-title"></div>
+                </div>
+
+                <figure id="artwork-figure">
+                    <img
+                        src="./assets/monet.jpg"
+                        alt="The Cliff Walk at Pourville by Claude Money"
+                        class="artwork"
+                        id="artwork"
+                    />
+                    <figcaption id="artwork-title">
+                        The Cliff Walk at Pourville
+                    </figcaption>
+                </figure>
+            </section>
+
+            <section id="generate-key">
+                <h2>Generate Your Key</h2>
+                <p>Register your domain to generate a public API key.</p>
+                <div class="grid-2">
+                    <form id="register">
+                        <label for="domain">Your Domain</label>
+                        <input
+                            type="url"
+                            id="domain"
+                            name="domain"
+                            placeholder="https://swe.cd"
+                            required
+                        />
+                        <button type="submit" id="form-submit">
+                            Generate Key
+                        </button>
+                        <p id="message">hello</p>
+                    </form>
+
+                    <div>
+                        <h3>Environment Variables</h3>
+                        <div id="env">
+                            <div id="env-header">
+                                <span>.env</span
+                                ><button
+                                    id="env-copy-btn"
+                                    onclick="copyCode('env')"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+                            <pre
+                                id="env-content"
+                            ><code class="language-javascript" id="key">OA_API_PUBLISHABLE_KEY=some_key_here</code><br/><code class="language-javascript">OA_API_BASE_URL=https://openart.work/api/v1</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="configuration">
+                <h2>Configuration</h2>
+                <p>
+                    Get started with your first API call. For a comprehensive
+                    guide, please refer to the
+                    <a
+                        href="https://github.com/cdom27/art-api"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-link outbound-link"
+                        ><span>repo documentation</span
+                        ><img
+                            src="./assets/link.svg"
+                            alt="External link arrow to GitHub"
+                    /></a>
+                    .
+                </p>
+
+                <div class="grid-2 grid-full">
+                    <div>
+                        <h3>Authentication</h3>
+                        <p>
+                            When making a call, include your api key in the
+                            request header as
+                            <var>x-api-key</var>:
+                        </p>
+                        <div id="use-artwork">
+                            <div id="use-artwork-header">
+                                <span>use-artist.ts</span
+                                ><button
+                                    id="use-artwork-copy-btn"
+                                    onclick="copyCode('use-artwork')"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+                            <pre
+                                id="use-artwork-content"
+                            ><code class="language-javascript">const response = await fetch(
+    `${import.meta.env.OA_API_BASE_URL}/artists?nationality=French`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': import.meta.env.OA_API_PUBLISHABLE_KEY,
+      },
+    },
+);
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="grid-3">
+                        <div>
+                            <h3>Rate Limiting</h3>
+                            <ul>
+                                <li>200 requests per 15 minutes</li>
+                                <li>
+                                    After the first 75 requests, a delay of up
+                                    to 3 seconds per request is applied
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3>Image Licensing</h3>
+                            <p>All images served are from the public domain.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div id="footer-content-wrapper">
+                <ul class="nav-list">
+                    <li>
+                        <a href="/" class="nav-link">Open Artwork API</a>
+                    </li>
+                    <li>
+                        <a href="/#generate-key" class="nav-link">Get a Key</a>
+                    </li>
+                    <li>
+                        <a href="/#configuration" class="nav-link"
+                            >Configuration</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/cdom27/art-api"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="nav-link outbound-link"
+                            ><span>Source Code</span
+                            ><img
+                                src="./assets/link-alt.svg"
+                                alt="External link arrow to GitHub"
+                        /></a>
+                    </li>
+                </ul>
+
+                <p>Metadata for public domain artwork.</p>
+
+                <hr />
+
+                <div class="creds">
+                    <span
+                        >Built by
+                        <a
+                            href="https://swe.cd"
+                            class="creds-link outbound-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            ><span>swe.cd</span
+                            ><img
+                                src="./assets/link-alt.svg"
+                                alt="External link arrow to GitHub" /></a
+                    ></span>
+                    <a
+                        href="https://github.com/cdom27/art-api"
+                        class="creds-link outbound-link"
+                        ><span>MIT License</span
+                        ><img
+                            src="./assets/link-alt.svg"
+                            alt="External link arrow to GitHub"
+                    /></a>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            async function fetchArtwork() {
+                try {
+                    const resp = await fetch('/api/v1/artworks/random', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-api-key':
+                                'f8fbfbd4087df136895df605e5c278734118e84066050c26bee4b654cf1a0031',
+                        },
+                    });
+
+                    const result = await resp.json();
+
+                    if (resp.ok) {
+                        document.getElementById(
+                            'loading-figure',
+                        ).style.display = 'none';
+
+                        document.getElementById(
+                            'artwork-figure',
+                        ).style.display = 'flex';
+
+                        document.getElementById('artwork').src =
+                            result.data.thumbnailImageUrl;
+                        document.getElementById('artwork-title').textContent =
+                            result.data.title;
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            fetchArtwork();
+
+            function copyCode(filePrefix) {
+                const vars = document.getElementById(`${filePrefix}-content`);
+                navigator.clipboard.writeText(vars.innerText);
+
+                const btn = document.getElementById(`${filePrefix}-copy-btn`);
+                btn.innerHTML = 'Copied';
+                setTimeout(() => {
+                    btn.innerHTML = 'Copy';
+                }, 3500);
+            }
+
+            const form = document.querySelector('#register');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const domainInput = document.querySelector('#domain');
+                const domain = domainInput.value.trim();
+
+                try {
+                    const resp = await fetch('/api/internal/register-domain', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ domain }),
+                    });
+
+                    const result = await resp.json();
+
+                    const message = document.querySelector('#message');
+                    if (resp.ok) {
+                        // update ui with key and message
+                        message.textContent = result.message;
+                        message.style.display = 'block';
+                        message.style.color = 'var(--color-code-100)';
+
+                        const key = document.querySelector('#key');
+                        key.textContent = `OA_API_PUBLISHABLE_KEY=${result.data}`;
+
+                        if (window.Prism) {
+                            Prism.highlightElement(key);
+                        }
+                    } else {
+                        message.textContent = result.message;
+                        message.style.display = 'block';
+                        message.style.color = 'var(--color-code-500)';
+                    }
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    form.reset();
+                }
+            });
+        </script>
+        <script src="./prism/prism.js"></script>
+    </body>
 </html>

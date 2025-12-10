@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+:root {
+    --font-sans: 'IBM Plex Sans', sans-serif;
+    --color-content-500: #111111;
+    --color-content-100: #bdbdbd;
+    --color-content-75: #dedede;
+    --color-content-50: #f4f3ee;
+
+    --color-link-500: #3e9792;
+    --color-link-400: #487594;
+    --color-link-100: #0077cd;
+    --color-link-50: #0091f9;
+
+    --color-footer-500: #5e6851;
+
+    --color-code-500: #bc3333;
+    --color-code-100: #33bc61;
+
+    background-color: var(--color-content-50);
+    color: var(--color-content-500);
+    font-family: var(--font-sans);
+    font-weight: normal;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    padding: 1rem;
+}
+
+.nav-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    & > :first-child {
+        margin-bottom: 1.75rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    & > :nth-child(3) {
+        margin: 0.5rem 0;
+    }
+
+    & > :last-child {
+        display: flex;
+    }
+}
+
+.nav-link {
+    text-decoration: none;
+}
+
+.nav-link {
+    color: inherit;
+}
+
+.nav-link:hover {
+    color: var(--color-link-500);
+}
+
+.outbound-link {
+    display: flex;
+    align-self: flex-start;
+    align-items: center;
+}
+
+.outbound-link img {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.5rem;
+}
+
+.inline-link {
+    display: inline;
+    color: var(--color-link-100);
+
+    &:hover {
+        color: var(--color-link-50);
+    }
+
+    &:visited {
+        color: var(--color-link-400);
+    }
+}
+
+.creds-link {
+    color: inherit;
+    font-weight: 600;
+    display: inline;
+    &:hover {
+        color: gold;
+    }
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+    font-weight: 500;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    margin: 4rem 0;
+    padding: 0 1rem;
+    gap: 4rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.artwork {
+    width: 100%;
+    border-radius: 0.25rem;
+    height: 250px;
+    object-fit: cover;
+}
+
+figure {
+    display: none;
+}
+
+figure,
+#loading-figure {
+    flex-direction: column;
+    margin: 0;
+    gap: 0.5rem;
+}
+
+figcaption {
+    text-align: center;
+    font-style: italic;
+}
+
+#loading-figure {
+    display: flex;
+}
+
+#loading-artwork,
+#loading-title {
+    background-color: var(--color-content-75);
+    border-radius: 0.25rem;
+    animation: blink 2s linear infinite;
+}
+
+#loading-artwork {
+    height: 250px;
+}
+
+#loading-title {
+    height: 20px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+
+    & > :last-child {
+        margin-top: 1rem;
+    }
+}
+
+label {
+    font-weight: 500;
+    font-size: 1.17rem;
+}
+
+input {
+    background-color: var(--color-content-50);
+    border: 1.5px solid var(--color-content-100);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    margin: 1rem 0;
+
+    &::placeholder {
+        font-weight: 300;
+        color: var(--color-content-100);
+    }
+}
+
+button {
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+#form-submit {
+    background-color: var(--color-content-500);
+    color: var(--color-content-50);
+    padding: 0.5rem 0;
+}
+
+#copy-btn {
+    background-color: var(--color-content-75);
+    padding: 0.5rem;
+    margin-left: auto;
+}
+
+footer {
+    background-color: var(--color-footer-500);
+    color: var(--color-content-50);
+    padding: 1rem;
+}
+
+#footer-content-wrapper {
+    & > :nth-child(2) {
+        padding-top: 1rem;
+    }
+}
+
+hr {
+    width: 100%;
+    border: 0.5px solid var(--color-content-50);
+    margin: 1.75rem 0;
+}
+
+.creds {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+#env,
+#use-artwork {
+    border: 1px solid var(--color-content-100);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    margin: 1rem 0;
+}
+
+var {
+    color: var(--color-code-100);
+}
+
+#env-header,
+#use-artwork-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+
+    & > span {
+        font-style: italic;
+    }
+}
+
+#use-artwork-copy-btn,
+#env-copy-btn {
+    background-color: var(--color-content-75);
+    padding: 0.25rem 0.75rem;
+}
+
+#message {
+    text-align: center;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .nav-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        & > :first-child {
+            margin-bottom: 0;
+        }
+
+        & > :nth-child(2) {
+            margin-left: auto;
+        }
+
+        :nth-child(3),
+        :nth-child(4) {
+            margin-left: 1rem;
+        }
+    }
+
+    #footer-content-wrapper {
+        padding: 2rem 0;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4rem;
+    }
+
+    .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4rem;
+    }
+
+    #configuration {
+        & > p {
+            width: 50%;
+        }
+    }
+}
+
+@media (min-width: 1440px) {
+    main {
+        gap: 8rem;
+    }
+
+    header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 0;
+    }
+
+    #footer-content-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 0;
+    }
+
+    section {
+        width: 1200px;
+        margin: 0 auto;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+
+        & > figure,
+        & > #loading-figure {
+            grid-column-start: 3;
+        }
+    }
+
+    .grid-2 {
+        margin-right: 20rem;
+    }
+
+    .grid-full {
+        margin-right: 0;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem;
+    }
+}

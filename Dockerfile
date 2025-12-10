@@ -1,30 +1,23 @@
-# build react client
-FROM node:20 AS client-build
-WORKDIR /client
-COPY ./client ./client
-RUN cd client && npm install && npm run build
-
-# build express api
 FROM node:20 AS server-build
 WORKDIR /app
 
-# clean copy
+# install deps and copy source code
 COPY package*.json ./
-RUN npm install
-
-# copy only source
+RUN npm ci
 COPY . .
 
-# force clean build
-RUN rm -rf dist .build && npm run build
+RUN npm run build
 
-# create prod image
-FROM node:18-alpine
+# prod
+FROM node:20-alpine
 WORKDIR /app
 
-# copy compiled api and client
-COPY --from=server-build /app /app
-COPY --from=client-build /client/client/dist /app/client/dist
+# install only prod deps
+COPY package*.json ./
+RUN npm ci --production && npm cache clean --force
+
+COPY --from=server-build /app/dist ./dist
+COPY --from=server-build /app/client ./client
 
 ENV NODE_ENV=production
 ENV PORT=8080
