@@ -19,6 +19,8 @@ func main() {
 	port := os.Getenv("PORT")
 
 	database.InitDB()
+	database.MigrateDB()
+
 	r := gin.Default()
 
 	r.GET("/ping", func(c *gin.Context) {
