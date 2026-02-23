@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/cdom27/open-artwork/database"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -17,6 +18,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 
+	database.InitDB()
 	r := gin.Default()
 
 	r.GET("/ping", func(c *gin.Context) {
