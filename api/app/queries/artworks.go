@@ -18,9 +18,9 @@ func GetArtworkByID(id int) (models.Artwork, error) {
 }
 
 // GetRandomArtwork retrieves a random artwork
-func GetRandomArtwork() (models.Artwork, error) {
-	var artwork models.Artwork
-	result := database.DB.Raw("SELECT * FROM artworks ORDER BY RAND() LIMIT 1")
+// func GetRandomArtwork() (models.Artwork, error) {
+// 	var artwork models.Artwork
+// 	result := database.DB.Raw("SELECT * FROM artworks ORDER BY RAND() LIMIT 1")
 
-	return artwork, result.Error
-}
+// 	return artwork, result.Error
+// }
