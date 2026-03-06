@@ -25,7 +25,7 @@ func InitDB() {
 
 // MigrateDB performs schema migrations for the app's db.
 func MigrateDB() {
-	err := DB.AutoMigrate(&models.Artwork{})
+	err := DB.AutoMigrate(&models.Artist{}, &models.Artwork{})
 
 	if err != nil {
 		log.Fatal("Failed to migrate database:", err)
